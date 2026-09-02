@@ -799,10 +799,12 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 }
 
 /* Sitting Pose State & Rhythmic Breathing */
-.ed-sitting #ed-wing-left, .ed-sitting #ed-wing-right{
+.ed-sitting #ed-wing-left, .ed-sitting #ed-wing-right,
+.ed-sitting .ed-wing-left-shared, .ed-sitting .ed-wing-right-shared{
   display:none !important;
 }
-.ed-sitting #ed-wings-folded, .ed-sitting #ed-talons{
+.ed-sitting #ed-wings-folded, .ed-sitting #ed-talons,
+.ed-sitting .ed-wings-folded-shared, .ed-sitting .ed-talons-shared{
   display:block !important;
 }
 .ed-sitting{
@@ -814,7 +816,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 }
 
 /* Ear Tuft Joy Wiggle */
-.ed-wiggle-ears #ed-ears{
+.ed-wiggle-ears #ed-ears, .ed-wiggle-ears .ed-ears-shared{
   animation:ed-ear-wiggle .35s ease-in-out infinite alternate !important;
 }
 @keyframes ed-ear-wiggle{
@@ -832,16 +834,16 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 }
 
 /* Dynamic Flapping Wing Animations */
-#ed-wing-left{
+#ed-wing-left, .ed-wing-left-shared{
   transform-origin:52px 125px; transition:transform .2s ease;
 }
-#ed-wing-right{
+#ed-wing-right, .ed-wing-right-shared{
   transform-origin:148px 125px; transition:transform .2s ease;
 }
-.ed-flapping #ed-wing-left{
+.ed-flapping #ed-wing-left, .ed-flapping .ed-wing-left-shared{
   animation:ed-flap-left .18s ease-in-out infinite alternate !important;
 }
-.ed-flapping #ed-wing-right{
+.ed-flapping #ed-wing-right, .ed-flapping .ed-wing-right-shared{
   animation:ed-flap-right .18s ease-in-out infinite alternate !important;
 }
 @keyframes ed-flap-left{
@@ -1700,22 +1702,45 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
         </div>
         <div style="text-align:center">
           <div class="ed-3d-stage" id="strat-ed-stage">
-            <div class="ed-speech-bubble" style="font-size:.8rem;max-width:220px">
+            <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;The file that never closes. Strategy all year.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:210px;height:230px" title="Uncle Ed - Click to react">
-              <svg viewBox="0 0 200 220" width="100%" height="100%">
+            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
+                <!-- Left Wing -->
+                <g class="ed-wing-left-shared">
+                  <path d="M52 110 C20 95 -15 80 -35 55 C-30 85 -10 115 15 135 C32 148 48 152 56 150 Z" fill="#142E3E"/>
+                  <path d="M48 116 C25 104 -2 92 -20 72 C-15 96 2 120 22 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Right Wing -->
+                <g class="ed-wing-right-shared">
+                  <path d="M148 110 C180 95 215 80 235 55 C230 85 210 115 185 135 C168 148 152 152 144 150 Z" fill="#142E3E"/>
+                  <path d="M152 116 C175 104 202 92 220 72 C215 96 198 120 178 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Folded Wings (Sitting Mode) -->
+                <g class="ed-wings-folded-shared" style="display:none">
+                  <path d="M26 110 C26 160 45 192 62 200 C50 170 48 136 52 108 Z" fill="#142E3E"/>
+                  <path d="M174 110 C174 160 155 192 138 200 C150 170 152 136 148 108 Z" fill="#142E3E"/>
+                </g>
+                <!-- Sitting Perched Talons -->
+                <g class="ed-talons-shared" style="display:none">
+                  <ellipse cx="78" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <ellipse cx="122" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <circle cx="70" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="78" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="86" cy="210" r="3.5" fill="#C5BE1B"/>
+                  <circle cx="114" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="122" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="130" cy="210" r="3.5" fill="#C5BE1B"/>
+                </g>
+                <!-- Ear Tufts -->
                 <g class="ed-ears-shared" style="transition:transform .2s ease;transform-origin:100px 40px">
                   <path d="M56 56 L30 20 L84 40 Z" fill="#14303F"/>
                   <path d="M144 56 L170 20 L116 40 Z" fill="#14303F"/>
                 </g>
+                <!-- Body & Suit -->
                 <path d="M100 26 C151 26 179 66 179 119 C179 173 145 209 100 209 C55 209 21 173 21 119 C21 66 49 26 100 26 Z" fill="#1D3D51"/>
-                <path d="M25 114 C25 162 44 194 61 202 C49 172 47 138 51 110 Z" fill="#142E3E"/>
-                <path d="M175 114 C175 162 156 194 139 202 C151 172 153 138 149 110 Z" fill="#142E3E"/>
                 <path d="M100 158 C118 158 130 170 132 186 C124 198 113 205 100 205 C87 205 76 198 68 186 C70 170 82 158 100 158 Z" fill="#24475D"/>
                 <path d="M100 42 C144 42 167 74 167 112 C167 148 139 174 100 174 C61 174 33 148 33 112 C33 74 56 42 100 42 Z" fill="#2C5169"/>
                 <path d="M100 58 C132 58 152 76 156 100 C146 84 126 74 100 74 C74 74 54 84 44 100 C48 76 68 58 100 58 Z" fill="#25455B"/>
-                
+                <!-- Open Eyes -->
                 <g class="ed-eyes-open-shared">
                   <circle cx="71" cy="107" r="27" fill="#F2F8FC"/>
                   <circle cx="129" cy="107" r="27" fill="#F2F8FC"/>
@@ -1730,15 +1755,15 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
                     <circle cx="123" cy="100" r="3.6" fill="#FFFFFF" opacity=".95"/>
                   </g>
                 </g>
-                
+                <!-- Happy Eyes -->
                 <g class="ed-eyes-happy-shared" style="display:none">
-                  <path d="M 48 114 Q 71 86 94 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 52 113 Q 71 89 90 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M 106 114 Q 129 86 152 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 110 113 Q 129 89 148 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M 46 115 Q 71 82 96 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 50 114 Q 71 86 92 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
+                  <path d="M 104 115 Q 129 82 154 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 108 114 Q 129 86 150 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
                 </g>
-
-                <path d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F"/>
+                <!-- Beak -->
+                <path class="ed-beak-shared" d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F" style="transition:transform .15s ease;transform-origin:100px 135px"/>
               </svg>
             </div>
           </div>
@@ -2060,22 +2085,45 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
         </div>
         <div style="text-align:center">
           <div class="ed-3d-stage" id="audit-ed-stage">
-            <div class="ed-speech-bubble" style="font-size:.82rem;max-width:230px">
+            <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;That letter has a deadline on it. Send it over. We&rsquo;ll read it today.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:215px;height:235px" title="Uncle Ed - Click to react / speak">
-              <svg viewBox="0 0 200 220" width="100%" height="100%">
+            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
+                <!-- Left Wing -->
+                <g class="ed-wing-left-shared">
+                  <path d="M52 110 C20 95 -15 80 -35 55 C-30 85 -10 115 15 135 C32 148 48 152 56 150 Z" fill="#142E3E"/>
+                  <path d="M48 116 C25 104 -2 92 -20 72 C-15 96 2 120 22 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Right Wing -->
+                <g class="ed-wing-right-shared">
+                  <path d="M148 110 C180 95 215 80 235 55 C230 85 210 115 185 135 C168 148 152 152 144 150 Z" fill="#142E3E"/>
+                  <path d="M152 116 C175 104 202 92 220 72 C215 96 198 120 178 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Folded Wings (Sitting Mode) -->
+                <g class="ed-wings-folded-shared" style="display:none">
+                  <path d="M26 110 C26 160 45 192 62 200 C50 170 48 136 52 108 Z" fill="#142E3E"/>
+                  <path d="M174 110 C174 160 155 192 138 200 C150 170 152 136 148 108 Z" fill="#142E3E"/>
+                </g>
+                <!-- Sitting Perched Talons -->
+                <g class="ed-talons-shared" style="display:none">
+                  <ellipse cx="78" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <ellipse cx="122" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <circle cx="70" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="78" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="86" cy="210" r="3.5" fill="#C5BE1B"/>
+                  <circle cx="114" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="122" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="130" cy="210" r="3.5" fill="#C5BE1B"/>
+                </g>
+                <!-- Ear Tufts -->
                 <g class="ed-ears-shared" style="transition:transform .2s ease;transform-origin:100px 40px">
                   <path d="M56 56 L30 20 L84 40 Z" fill="#14303F"/>
                   <path d="M144 56 L170 20 L116 40 Z" fill="#14303F"/>
                 </g>
+                <!-- Body & Suit -->
                 <path d="M100 26 C151 26 179 66 179 119 C179 173 145 209 100 209 C55 209 21 173 21 119 C21 66 49 26 100 26 Z" fill="#1D3D51"/>
-                <path d="M25 114 C25 162 44 194 61 202 C49 172 47 138 51 110 Z" fill="#142E3E"/>
-                <path d="M175 114 C175 162 156 194 139 202 C151 172 153 138 149 110 Z" fill="#142E3E"/>
                 <path d="M100 158 C118 158 130 170 132 186 C124 198 113 205 100 205 C87 205 76 198 68 186 C70 170 82 158 100 158 Z" fill="#24475D"/>
                 <path d="M100 42 C144 42 167 74 167 112 C167 148 139 174 100 174 C61 174 33 148 33 112 C33 74 56 42 100 42 Z" fill="#2C5169"/>
                 <path d="M100 58 C132 58 152 76 156 100 C146 84 126 74 100 74 C74 74 54 84 44 100 C48 76 68 58 100 58 Z" fill="#25455B"/>
-                
+                <!-- Open Eyes -->
                 <g class="ed-eyes-open-shared">
                   <circle cx="71" cy="107" r="27" fill="#F2F8FC"/>
                   <circle cx="129" cy="107" r="27" fill="#F2F8FC"/>
@@ -2090,15 +2138,15 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
                     <circle cx="123" cy="100" r="3.6" fill="#FFFFFF" opacity=".95"/>
                   </g>
                 </g>
-                
+                <!-- Happy Eyes -->
                 <g class="ed-eyes-happy-shared" style="display:none">
-                  <path d="M 48 114 Q 71 86 94 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 52 113 Q 71 89 90 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M 106 114 Q 129 86 152 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 110 113 Q 129 89 148 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M 46 115 Q 71 82 96 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 50 114 Q 71 86 92 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
+                  <path d="M 104 115 Q 129 82 154 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 108 114 Q 129 86 150 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
                 </g>
-
-                <path d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F"/>
+                <!-- Beak -->
+                <path class="ed-beak-shared" d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F" style="transition:transform .15s ease;transform-origin:100px 135px"/>
               </svg>
             </div>
           </div>
@@ -2467,22 +2515,45 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
         </div>
         <div style="text-align:center">
           <div class="ed-3d-stage" id="about-ed-stage">
-            <div class="ed-speech-bubble" style="font-size:.85rem;max-width:240px">
+            <div class="ed-speech-bubble" style="font-size:.85rem;max-width:260px">
               &ldquo;Everybody&rsquo;s got an Uncle Sam. Not everybody&rsquo;s got an Uncle Ed.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react">
-              <svg viewBox="0 0 200 220" width="100%" height="100%">
+            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
+                <!-- Left Wing -->
+                <g class="ed-wing-left-shared">
+                  <path d="M52 110 C20 95 -15 80 -35 55 C-30 85 -10 115 15 135 C32 148 48 152 56 150 Z" fill="#142E3E"/>
+                  <path d="M48 116 C25 104 -2 92 -20 72 C-15 96 2 120 22 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Right Wing -->
+                <g class="ed-wing-right-shared">
+                  <path d="M148 110 C180 95 215 80 235 55 C230 85 210 115 185 135 C168 148 152 152 144 150 Z" fill="#142E3E"/>
+                  <path d="M152 116 C175 104 202 92 220 72 C215 96 198 120 178 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Folded Wings (Sitting Mode) -->
+                <g class="ed-wings-folded-shared" style="display:none">
+                  <path d="M26 110 C26 160 45 192 62 200 C50 170 48 136 52 108 Z" fill="#142E3E"/>
+                  <path d="M174 110 C174 160 155 192 138 200 C150 170 152 136 148 108 Z" fill="#142E3E"/>
+                </g>
+                <!-- Sitting Perched Talons -->
+                <g class="ed-talons-shared" style="display:none">
+                  <ellipse cx="78" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <ellipse cx="122" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <circle cx="70" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="78" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="86" cy="210" r="3.5" fill="#C5BE1B"/>
+                  <circle cx="114" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="122" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="130" cy="210" r="3.5" fill="#C5BE1B"/>
+                </g>
+                <!-- Ear Tufts -->
                 <g class="ed-ears-shared" style="transition:transform .2s ease;transform-origin:100px 40px">
                   <path d="M56 56 L30 20 L84 40 Z" fill="#14303F"/>
                   <path d="M144 56 L170 20 L116 40 Z" fill="#14303F"/>
                 </g>
+                <!-- Body & Suit -->
                 <path d="M100 26 C151 26 179 66 179 119 C179 173 145 209 100 209 C55 209 21 173 21 119 C21 66 49 26 100 26 Z" fill="#1D3D51"/>
-                <path d="M25 114 C25 162 44 194 61 202 C49 172 47 138 51 110 Z" fill="#142E3E"/>
-                <path d="M175 114 C175 162 156 194 139 202 C151 172 153 138 149 110 Z" fill="#142E3E"/>
                 <path d="M100 158 C118 158 130 170 132 186 C124 198 113 205 100 205 C87 205 76 198 68 186 C70 170 82 158 100 158 Z" fill="#24475D"/>
                 <path d="M100 42 C144 42 167 74 167 112 C167 148 139 174 100 174 C61 174 33 148 33 112 C33 74 56 42 100 42 Z" fill="#2C5169"/>
                 <path d="M100 58 C132 58 152 76 156 100 C146 84 126 74 100 74 C74 74 54 84 44 100 C48 76 68 58 100 58 Z" fill="#25455B"/>
-                
+                <!-- Open Eyes -->
                 <g class="ed-eyes-open-shared">
                   <circle cx="71" cy="107" r="27" fill="#F2F8FC"/>
                   <circle cx="129" cy="107" r="27" fill="#F2F8FC"/>
@@ -2497,15 +2568,15 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
                     <circle cx="123" cy="100" r="3.6" fill="#FFFFFF" opacity=".95"/>
                   </g>
                 </g>
-                
+                <!-- Happy Eyes -->
                 <g class="ed-eyes-happy-shared" style="display:none">
-                  <path d="M 48 114 Q 71 86 94 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 52 113 Q 71 89 90 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M 106 114 Q 129 86 152 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 110 113 Q 129 89 148 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M 46 115 Q 71 82 96 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 50 114 Q 71 86 92 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
+                  <path d="M 104 115 Q 129 82 154 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 108 114 Q 129 86 150 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
                 </g>
-
-                <path d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F"/>
+                <!-- Beak -->
+                <path class="ed-beak-shared" d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F" style="transition:transform .15s ease;transform-origin:100px 135px"/>
               </svg>
             </div>
           </div>
@@ -2944,22 +3015,45 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
         </div>
         <div style="text-align:center">
           <div class="ed-3d-stage" id="appt-ed-stage">
-            <div class="ed-speech-bubble" style="font-size:.82rem;max-width:230px">
+            <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;Pick a time. A real person who has read your file turns up.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:210px;height:230px" title="Uncle Ed - Click to react / speak">
-              <svg viewBox="0 0 200 220" width="100%" height="100%">
+            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
+                <!-- Left Wing -->
+                <g class="ed-wing-left-shared">
+                  <path d="M52 110 C20 95 -15 80 -35 55 C-30 85 -10 115 15 135 C32 148 48 152 56 150 Z" fill="#142E3E"/>
+                  <path d="M48 116 C25 104 -2 92 -20 72 C-15 96 2 120 22 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Right Wing -->
+                <g class="ed-wing-right-shared">
+                  <path d="M148 110 C180 95 215 80 235 55 C230 85 210 115 185 135 C168 148 152 152 144 150 Z" fill="#142E3E"/>
+                  <path d="M152 116 C175 104 202 92 220 72 C215 96 198 120 178 136 Z" fill="#1D3D51"/>
+                </g>
+                <!-- Folded Wings (Sitting Mode) -->
+                <g class="ed-wings-folded-shared" style="display:none">
+                  <path d="M26 110 C26 160 45 192 62 200 C50 170 48 136 52 108 Z" fill="#142E3E"/>
+                  <path d="M174 110 C174 160 155 192 138 200 C150 170 152 136 148 108 Z" fill="#142E3E"/>
+                </g>
+                <!-- Sitting Perched Talons -->
+                <g class="ed-talons-shared" style="display:none">
+                  <ellipse cx="78" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <ellipse cx="122" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+                  <circle cx="70" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="78" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="86" cy="210" r="3.5" fill="#C5BE1B"/>
+                  <circle cx="114" cy="210" r="3.5" fill="#C5BE1B"/><circle cx="122" cy="212" r="3.5" fill="#C5BE1B"/><circle cx="130" cy="210" r="3.5" fill="#C5BE1B"/>
+                </g>
+                <!-- Ear Tufts -->
                 <g class="ed-ears-shared" style="transition:transform .2s ease;transform-origin:100px 40px">
                   <path d="M56 56 L30 20 L84 40 Z" fill="#14303F"/>
                   <path d="M144 56 L170 20 L116 40 Z" fill="#14303F"/>
                 </g>
+                <!-- Body & Suit -->
                 <path d="M100 26 C151 26 179 66 179 119 C179 173 145 209 100 209 C55 209 21 173 21 119 C21 66 49 26 100 26 Z" fill="#1D3D51"/>
-                <path d="M25 114 C25 162 44 194 61 202 C49 172 47 138 51 110 Z" fill="#142E3E"/>
-                <path d="M175 114 C175 162 156 194 139 202 C151 172 153 138 149 110 Z" fill="#142E3E"/>
                 <path d="M100 158 C118 158 130 170 132 186 C124 198 113 205 100 205 C87 205 76 198 68 186 C70 170 82 158 100 158 Z" fill="#24475D"/>
                 <path d="M100 42 C144 42 167 74 167 112 C167 148 139 174 100 174 C61 174 33 148 33 112 C33 74 56 42 100 42 Z" fill="#2C5169"/>
                 <path d="M100 58 C132 58 152 76 156 100 C146 84 126 74 100 74 C74 74 54 84 44 100 C48 76 68 58 100 58 Z" fill="#25455B"/>
-                
+                <!-- Open Eyes -->
                 <g class="ed-eyes-open-shared">
                   <circle cx="71" cy="107" r="27" fill="#F2F8FC"/>
                   <circle cx="129" cy="107" r="27" fill="#F2F8FC"/>
@@ -2974,15 +3068,15 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
                     <circle cx="123" cy="100" r="3.6" fill="#FFFFFF" opacity=".95"/>
                   </g>
                 </g>
-                
+                <!-- Happy Eyes -->
                 <g class="ed-eyes-happy-shared" style="display:none">
-                  <path d="M 48 114 Q 71 86 94 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 52 113 Q 71 89 90 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
-                  <path d="M 106 114 Q 129 86 152 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-                  <path d="M 110 113 Q 129 89 148 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
+                  <path d="M 46 115 Q 71 82 96 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 50 114 Q 71 86 92 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
+                  <path d="M 104 115 Q 129 82 154 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+                  <path d="M 108 114 Q 129 86 150 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
                 </g>
-
-                <path d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F"/>
+                <!-- Beak -->
+                <path class="ed-beak-shared" d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F" style="transition:transform .15s ease;transform-origin:100px 135px"/>
               </svg>
             </div>
           </div>
@@ -3714,32 +3808,34 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   }
   resetIdleTimer();
 
-  // Mouse & Touch Flight Tracking with Automatic Pose Switching (Flight on move -> Sitting on stop)
+  // Mouse & Touch Flight Tracking with Automatic Pose Switching for All Owls across Views
   function updateFlightTarget(clientX, clientY){
     resetIdleTimer();
-    if (owlStage && owlWrapper) {
-      // Switch to Flying mode on move
-      owlWrapper.classList.remove('ed-sitting');
-      
-      clearTimeout(sittingLandingTimer);
-      sittingLandingTimer = setTimeout(function(){
-        // Gracefully land and sit when stopped
-        owlWrapper.classList.add('ed-sitting');
-        setMood('happy');
-      }, 1400);
+    
+    // Switch all owls to flying mode on cursor move
+    allOwls.forEach(function(owl){
+      owl.classList.remove('ed-sitting');
+    });
 
+    clearTimeout(sittingLandingTimer);
+    sittingLandingTimer = setTimeout(function(){
+      // Gracefully land and sit all owls when stopped
+      allOwls.forEach(function(owl){
+        owl.classList.add('ed-sitting');
+      });
+      setMood('happy');
+    }, 1400);
+
+    if (owlStage && owlWrapper) {
       var rect = owlStage.getBoundingClientRect();
       var centerX = rect.left + rect.width / 2;
       var centerY = rect.top + rect.height / 2;
-
       var deltaX = (clientX - centerX);
       var deltaY = (clientY - centerY);
 
-      // Bound flight area
       flightTargetX = Math.max(-90, Math.min(90, deltaX * 0.35));
       flightTargetY = Math.max(-60, Math.min(60, deltaY * 0.35));
 
-      // Pupil tracking
       var pL = document.getElementById('ed-group-pupil-left');
       var pR = document.getElementById('ed-group-pupil-right');
       var pupX = Math.max(-6, Math.min(6, (deltaX / (window.innerWidth / 2)) * 7));
@@ -3747,6 +3843,26 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       if (pL) pL.style.transform = 'translate(' + pupX + 'px, ' + pupY + 'px)';
       if (pR) pR.style.transform = 'translate(' + pupX + 'px, ' + pupY + 'px)';
     }
+
+    // Secondary owl pupil tracking for other views
+    var sharedPupilsLeft = Array.prototype.slice.call(document.querySelectorAll('.ed-pupil-left-shared'));
+    var sharedPupilsRight = Array.prototype.slice.call(document.querySelectorAll('.ed-pupil-right-shared'));
+    sharedPupilsLeft.forEach(function(p){
+      var r = p.getBoundingClientRect();
+      var dx = clientX - (r.left + r.width / 2);
+      var dy = clientY - (r.top + r.height / 2);
+      var px = Math.max(-6, Math.min(6, (dx / (window.innerWidth / 2)) * 7));
+      var py = Math.max(-5, Math.min(5, (dy / (window.innerHeight / 2)) * 6));
+      p.style.transform = 'translate(' + px + 'px, ' + py + 'px)';
+    });
+    sharedPupilsRight.forEach(function(p){
+      var r = p.getBoundingClientRect();
+      var dx = clientX - (r.left + r.width / 2);
+      var dy = clientY - (r.top + r.height / 2);
+      var px = Math.max(-6, Math.min(6, (dx / (window.innerWidth / 2)) * 7));
+      var py = Math.max(-5, Math.min(5, (dy / (window.innerHeight / 2)) * 6));
+      p.style.transform = 'translate(' + px + 'px, ' + py + 'px)';
+    });
   }
 
   window.addEventListener('mousemove', function(e){
