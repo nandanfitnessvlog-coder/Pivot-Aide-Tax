@@ -453,9 +453,9 @@ footer .wm{ font-family:var(--f-display); font-size:1.05rem; color:#fff; font-we
   .calc-number{ width:100%; text-align:center; }
 
   /* Mobile Responsive Uncle Ed Mascot Stages */
-  .ed-3d-stage{ min-height:290px; max-width:320px; margin:16px auto 0; padding-bottom:8px; }
-  .ed-3d-wrapper{ width:210px !important; height:230px !important; }
-  .ed-portal-disc{ width:180px !important; height:38px !important; bottom:8px !important; }
+  .ed-3d-stage{ max-width:320px; margin:10px auto 0; padding-bottom:0; min-height:0; }
+  .ed-3d-wrapper{ width:200px !important; height:220px !important; }
+  .ed-portal-disc{ width:180px !important; height:38px !important; bottom:2px !important; }
   .ed-speech-bubble{ font-size:.82rem !important; padding:8px 14px !important; max-width:270px !important; margin-bottom:8px !important; }
 }
 
@@ -766,12 +766,13 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 /* ---------- 3D interactive Uncle Ed character & Flight Stage ---------- */
 .ed-3d-stage{
   perspective:1000px; display:flex; flex-direction:column; align-items:center;
-  position:relative; user-select:none; width:100%; max-width:420px; min-height:330px; margin:0 auto; padding-bottom:12px;
+  position:relative; user-select:none; width:100%; max-width:400px; margin:0 auto; padding-bottom:0;
+  height:auto; min-height:0;
 }
 .ed-speech-bubble{
   background:rgba(11,44,62,.95); color:#fff; border:1px solid var(--gold); border-radius:10px;
   padding:11px 16px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
-  position:relative; margin-bottom:12px; max-width:300px; text-align:center;
+  position:relative; margin-bottom:10px; max-width:300px; text-align:center;
   box-shadow:0 12px 30px rgba(0,0,0,.45); backdrop-filter:blur(8px);
   transition:transform .22s ease, border-color .22s ease; transform-origin:bottom center;
   z-index:25;
@@ -781,13 +782,13 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   border-width:7px 7px 0 7px; border-style:solid; border-color:var(--gold) transparent transparent transparent;
 }
 
-/* Glowing Cyan Flight Portal Floor */
+/* Glowing Cyan Flight Portal Disc */
 .ed-portal-disc{
-  position:absolute; width:210px; height:46px; bottom:2px; left:50%;
+  position:absolute; width:210px; height:44px; bottom:2px; left:50%;
   transform:translateX(-50%) rotateX(72deg); border-radius:50%;
   background:radial-gradient(ellipse at center, rgba(1,159,255,.6) 0%, rgba(1,159,255,.2) 50%, transparent 75%);
   border:2px solid rgba(1,159,255,.75); box-shadow:0 0 35px rgba(1,159,255,.85), inset 0 0 20px rgba(1,159,255,.5);
-  animation:ed-portal-pulse 3s ease-in-out infinite alternate; pointer-events:none; z-index:-1;
+  animation:ed-portal-pulse 3s ease-in-out infinite alternate; pointer-events:none; z-index:1;
 }
 @keyframes ed-portal-pulse{
   0%{ transform:translateX(-50%) rotateX(72deg) scale(0.92); opacity:.7; }
@@ -796,12 +797,12 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
 /* 3D Flying / Sitting Mascot Container */
 .ed-3d-wrapper{
-  width:240px; height:260px; position:relative; transform-style:preserve-3d;
-  cursor:pointer; filter:drop-shadow(0 25px 40px rgba(0,0,0,.5));
-  will-change:transform; z-index:15;
+  width:230px; height:240px; position:relative; transform-style:preserve-3d;
+  cursor:pointer; filter:drop-shadow(0 20px 35px rgba(0,0,0,.5));
+  will-change:transform; z-index:15; touch-action:none; margin:0 auto;
 }
 .ed-3d-wrapper:hover, .ed-3d-wrapper.active-glow{
-  filter:drop-shadow(0 0 24px rgba(1,159,255,.65)) drop-shadow(0 25px 40px rgba(0,0,0,.5));
+  filter:drop-shadow(0 0 24px rgba(1,159,255,.65)) drop-shadow(0 20px 35px rgba(0,0,0,.5));
 }
 
 /* Sitting Pose State & Rhythmic Breathing */
@@ -1054,10 +1055,11 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
           &ldquo;Uncle Sam handles compliance. I handle strategy.&rdquo;
         </div>
 
+        <!-- Glowing Cyan Flight Portal -->
+        <div class="ed-portal-disc"></div>
+
         <!-- 3D Flying Mascot Container -->
-        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for cool sunglasses">
-          <!-- Glowing Cyan Flight Portal Disc -->
-          <div class="ed-portal-disc"></div>
+        <div class="ed-3d-wrapper ed-sitting" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for cool sunglasses">
           <svg viewBox="0 0 240 230" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
             <!-- Left Wing (Flapping / Gliding) -->
             <g id="ed-wing-left">
@@ -1755,8 +1757,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;The file that never closes. Strategy all year.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
-              <div class="ed-portal-disc"></div>
+            <div class="ed-portal-disc"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable ed-sitting" title="Uncle Ed - Click to react / speak">
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -2138,8 +2140,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;That letter has a deadline on it. Send it over. We&rsquo;ll read it today.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
-              <div class="ed-portal-disc"></div>
+            <div class="ed-portal-disc"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable ed-sitting" title="Uncle Ed - Click to react / speak">
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -2568,8 +2570,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.85rem;max-width:260px">
               &ldquo;Everybody&rsquo;s got an Uncle Sam. Not everybody&rsquo;s got an Uncle Ed.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
-              <div class="ed-portal-disc"></div>
+            <div class="ed-portal-disc"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable ed-sitting" title="Uncle Ed - Click to react / speak">
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -3068,8 +3070,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;Pick a time. A real person who has read your file turns up.&rdquo;
             </div>
-            <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
-              <div class="ed-portal-disc"></div>
+            <div class="ed-portal-disc"></div>
+            <div class="ed-3d-wrapper ed-owl-trackable ed-sitting" title="Uncle Ed - Click to react / speak">
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -4009,12 +4011,6 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
   // Multi-Instance Reactions for Other Owls Across Views
   var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
-  
-  // Start all owls in cozy perched sitting state on page load
-  allOwls.forEach(function(owl){
-    owl.classList.add('ed-sitting');
-  });
-
   allOwls.forEach(function(owl){
     owl.addEventListener('pointerenter', function(){
       var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
