@@ -754,53 +754,131 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 }
 .theme-pill:hover{ border-color:var(--blue); color:var(--blue); }
 
-/* ---------- 3D interactive Uncle Ed character ---------- */
+/* ---------- 3D interactive Uncle Ed character & Flight Stage ---------- */
 .ed-3d-stage{
-  perspective:900px; display:flex; flex-direction:column; align-items:center;
-  position:relative; user-select:none; max-width:340px; margin:0 auto;
+  perspective:1000px; display:flex; flex-direction:column; align-items:center;
+  position:relative; user-select:none; width:100%; max-width:420px; min-height:410px; margin:0 auto;
 }
 .ed-speech-bubble{
-  background:rgba(11,44,62,.94); color:#fff; border:1px solid var(--gold); border-radius:10px;
-  padding:12px 16px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
-  position:relative; margin-bottom:12px; max-width:290px; text-align:center;
-  box-shadow:0 10px 28px rgba(0,0,0,.4); backdrop-filter:blur(8px);
-  transition:transform .2s ease, border-color .2s ease; transform-origin:bottom center;
+  background:rgba(11,44,62,.95); color:#fff; border:1px solid var(--gold); border-radius:10px;
+  padding:12px 18px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
+  position:relative; margin-bottom:14px; max-width:300px; text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.45); backdrop-filter:blur(8px);
+  transition:transform .22s ease, border-color .22s ease; transform-origin:bottom center;
+  z-index:25;
 }
 .ed-speech-bubble:after{
   content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
   border-width:7px 7px 0 7px; border-style:solid; border-color:var(--gold) transparent transparent transparent;
 }
-.ed-quick-chips{
-  display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:14px; max-width:320px;
+
+/* 3D Orbiting UI Chips Ring */
+.ed-orbit-container{
+  position:absolute; width:340px; height:120px; top:190px; left:50%;
+  transform:translateX(-50%) rotateX(68deg);
+  transform-style:preserve-3d; pointer-events:none; z-index:20;
 }
-.ed-chip{
-  font-family:var(--f-mono); font-size:.65rem; padding:5px 10px; border-radius:12px;
-  background:rgba(255,255,255,.07); border:1px solid var(--night-line); color:var(--night-ink-2);
-  cursor:pointer; transition:all .16s ease; white-space:nowrap;
+.ed-orbit-ring{
+  width:100%; height:100%; position:relative; transform-style:preserve-3d;
+  animation:ed-orbit-spin 18s linear infinite;
 }
-.ed-chip:hover{
-  background:rgba(1,159,255,.25); border-color:var(--brand); color:#fff; transform:translateY(-1px);
-}
-.ed-3d-wrapper{
-  width:240px; height:260px; position:relative; transform-style:preserve-3d;
-  transition:transform .12s cubic-bezier(.2,.8,.4,1), filter .2s ease; cursor:pointer;
-  filter:drop-shadow(0 20px 35px rgba(0,0,0,.45));
-}
-.ed-3d-wrapper:hover, .ed-3d-wrapper.active-glow{
-  filter:drop-shadow(0 0 20px rgba(1,159,255,.5)) drop-shadow(0 20px 35px rgba(0,0,0,.45));
+.ed-orbit-ring:hover{ animation-play-state:paused; }
+@keyframes ed-orbit-spin{
+  from{ transform:rotateZ(0deg); }
+  to{ transform:rotateZ(360deg); }
 }
 
-/* Tactile Micro-Interactions */
+.ed-orbit-item{
+  position:absolute; transform-style:preserve-3d; pointer-events:auto;
+}
+.ed-orbit-item:nth-child(1){ top:0; left:50%; transform:translate(-50%,-50%); }
+.ed-orbit-item:nth-child(2){ top:50%; right:0; transform:translate(50%,-50%); }
+.ed-orbit-item:nth-child(3){ bottom:0; left:50%; transform:translate(-50%,50%); }
+.ed-orbit-item:nth-child(4){ top:50%; left:0; transform:translate(-50%,-50%); }
+
+.ed-orbit-btn{
+  font-family:var(--f-mono); font-size:.66rem; font-weight:600; padding:6px 12px; border-radius:14px;
+  background:rgba(9,32,46,.92); border:1px solid rgba(1,159,255,.5); color:#DCEBF3;
+  cursor:pointer; transition:all .2s cubic-bezier(.2,.8,.3,1); white-space:nowrap;
+  box-shadow:0 8px 20px rgba(0,0,0,.5), 0 0 12px rgba(1,159,255,.25); backdrop-filter:blur(6px);
+  transform:rotateX(-68deg); animation:ed-counter-spin 18s linear infinite;
+}
+@keyframes ed-counter-spin{
+  from{ transform:rotateX(-68deg) rotateZ(0deg); }
+  to{ transform:rotateX(-68deg) rotateZ(-360deg); }
+}
+.ed-orbit-btn:hover, .ed-orbit-btn.active{
+  background:var(--blue-dk); border-color:var(--gold); color:#fff;
+  box-shadow:0 0 25px rgba(1,159,255,.9), 0 8px 22px rgba(0,0,0,.6);
+  transform:rotateX(-68deg) scale(1.15);
+}
+
+/* Glowing Cyan Flight Portal */
+.ed-portal-disc{
+  position:absolute; width:220px; height:50px; bottom:12px; left:50%;
+  transform:translateX(-50%) rotateX(72deg); border-radius:50%;
+  background:radial-gradient(ellipse at center, rgba(1,159,255,.5) 0%, rgba(1,159,255,.15) 50%, transparent 75%);
+  border:2px solid rgba(1,159,255,.65); box-shadow:0 0 35px rgba(1,159,255,.8), inset 0 0 20px rgba(1,159,255,.5);
+  animation:ed-portal-pulse 3s ease-in-out infinite alternate; pointer-events:none; z-index:5;
+}
+@keyframes ed-portal-pulse{
+  0%{ transform:translateX(-50%) rotateX(72deg) scale(0.92); opacity:.7; }
+  100%{ transform:translateX(-50%) rotateX(72deg) scale(1.08); opacity:1; filter:drop-shadow(0 0 15px rgba(1,159,255,.9)); }
+}
+
+/* 3D Flying Mascot Container */
+.ed-3d-wrapper{
+  width:240px; height:260px; position:relative; transform-style:preserve-3d;
+  cursor:pointer; filter:drop-shadow(0 25px 40px rgba(0,0,0,.5));
+  will-change:transform; z-index:15;
+}
+.ed-3d-wrapper:hover, .ed-3d-wrapper.active-glow{
+  filter:drop-shadow(0 0 24px rgba(1,159,255,.65)) drop-shadow(0 25px 40px rgba(0,0,0,.5));
+}
+
+/* Dynamic Flapping Wing Animations */
+#ed-wing-left{
+  transform-origin:52px 125px; transition:transform .2s ease;
+}
+#ed-wing-right{
+  transform-origin:148px 125px; transition:transform .2s ease;
+}
+.ed-flapping #ed-wing-left{
+  animation:ed-flap-left .18s ease-in-out infinite alternate !important;
+}
+.ed-flapping #ed-wing-right{
+  animation:ed-flap-right .18s ease-in-out infinite alternate !important;
+}
+@keyframes ed-flap-left{
+  0%{ transform:rotate(8deg) scaleY(1.02); }
+  100%{ transform:rotate(-28deg) scaleY(0.85); }
+}
+@keyframes ed-flap-right{
+  0%{ transform:rotate(-8deg) scaleY(1.02); }
+  100%{ transform:rotate(28deg) scaleY(0.85); }
+}
+
+/* 360° Aerial Barrel Roll */
+.ed-barrel-roll{
+  animation:ed-barrel .85s cubic-bezier(.2,.8,.3,1) !important;
+}
+@keyframes ed-barrel{
+  0%{ transform:perspective(1000px) rotateZ(0deg) rotateY(0deg) scale(1); }
+  50%{ transform:perspective(1000px) rotateZ(180deg) rotateY(180deg) scale(1.22); filter:drop-shadow(0 0 35px rgba(1,159,255,1)); }
+  100%{ transform:perspective(1000px) rotateZ(360deg) rotateY(360deg) scale(1); }
+}
+
+/* Tactile Click Squash & Elastic Overshoot Bounce */
 .ed-3d-wrapper:active{
-  transform:scale(0.92, 0.88) translateY(6px) !important;
+  transform:scale(0.90, 0.84) translateY(10px) !important;
   transition:transform .06s ease !important;
 }
 .ed-bouncing{
-  animation:ed-squash-bounce .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+  animation:ed-squash-bounce .52s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
 }
 @keyframes ed-squash-bounce{
-  0%{ transform:scale(0.92, 0.88) translateY(6px); }
-  50%{ transform:scale(1.06, 1.1) translateY(-10px); }
+  0%{ transform:scale(0.90, 0.84) translateY(10px); }
+  50%{ transform:scale(1.08, 1.14) translateY(-14px); }
   100%{ transform:scale(1, 1) translateY(0); }
 }
 
@@ -809,21 +887,21 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 }
 @keyframes ed-ruffle{
   0%, 100%{ transform:rotate(0deg); }
-  25%{ transform:rotate(-3.5deg) scaleY(1.04); }
-  75%{ transform:rotate(3.5deg) scaleY(0.96); }
+  25%{ transform:rotate(-4deg) scaleY(1.05); }
+  75%{ transform:rotate(4deg) scaleY(0.95); }
 }
 
 .ed-calm-aura{
   animation:ed-sage-glow 2.4s ease-in-out infinite alternate !important;
 }
 @keyframes ed-sage-glow{
-  0%{ filter:drop-shadow(0 0 10px rgba(1,159,255,.35)) drop-shadow(0 15px 25px rgba(0,0,0,.4)); }
-  100%{ filter:drop-shadow(0 0 30px rgba(1,159,255,.9)) drop-shadow(0 20px 35px rgba(0,0,0,.5)); }
+  0%{ filter:drop-shadow(0 0 12px rgba(1,159,255,.4)) drop-shadow(0 15px 25px rgba(0,0,0,.4)); }
+  100%{ filter:drop-shadow(0 0 35px rgba(1,159,255,1)) drop-shadow(0 20px 35px rgba(0,0,0,.5)); }
 }
 
 .ed-laser-focus{
-  transform:perspective(900px) translateZ(30px) scale(1.04) !important;
-  filter:drop-shadow(0 0 22px rgba(234,228,47,.7)) drop-shadow(0 20px 35px rgba(0,0,0,.5)) !important;
+  transform:perspective(1000px) translateZ(35px) scale(1.06) !important;
+  filter:drop-shadow(0 0 25px rgba(234,228,47,.8)) drop-shadow(0 20px 35px rgba(0,0,0,.5)) !important;
 }
 
 .ed-talking #ed-beak, .ed-talking .ed-beak-shared{
@@ -832,14 +910,6 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 @keyframes ed-talk{
   0%{ transform:translateY(0); }
   100%{ transform:translateY(3.5px) scaleY(1.15); }
-}
-@keyframes ed-spin{
-  0%{ transform:perspective(900px) rotateY(0deg); }
-  50%{ transform:perspective(900px) rotateY(180deg) scale(1.08); }
-  100%{ transform:perspective(900px) rotateY(360deg); }
-}
-.ed-spinning{
-  animation:ed-spin .65s cubic-bezier(.2,.8,.3,1) !important;
 }
 </style>
 </head>
@@ -939,32 +1009,57 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     </div>
     <div class="hero-owl">
       <div class="ed-3d-stage" id="hero-ed-stage">
+        <!-- Speech Bubble -->
         <div class="ed-speech-bubble" id="ed-bubble">
           &ldquo;Uncle Sam handles compliance. I handle strategy.&rdquo;
         </div>
-        <div class="ed-quick-chips">
-          <button class="ed-chip" data-ask="deductions">💰 Max My Deductions</button>
-          <button class="ed-chip" data-ask="panic">⏳ April Panic?</button>
-          <button class="ed-chip" data-ask="audit">🛡️ Audit Armor</button>
-          <button class="ed-chip" data-ask="secret">✨ Secret Strategy</button>
+
+        <!-- 3D Orbiting UI Chips Ring -->
+        <div class="ed-orbit-container" id="ed-orbit-box">
+          <div class="ed-orbit-ring" id="ed-orbit-ring">
+            <div class="ed-orbit-item">
+              <button class="ed-orbit-btn ed-chip" data-ask="deductions">💰 Max My Deductions</button>
+            </div>
+            <div class="ed-orbit-item">
+              <button class="ed-orbit-btn ed-chip" data-ask="panic">⏳ April Panic?</button>
+            </div>
+            <div class="ed-orbit-item">
+              <button class="ed-orbit-btn ed-chip" data-ask="audit">🛡️ Audit Armor</button>
+            </div>
+            <div class="ed-orbit-item">
+              <button class="ed-orbit-btn ed-chip" data-ask="secret">✨ Secret Strategy</button>
+            </div>
+          </div>
         </div>
-        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for cool sunglasses">
-          <svg viewBox="0 0 200 220" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
-            <!-- ear tufts -->
+
+        <!-- Glowing Cyan Flight Portal -->
+        <div class="ed-portal-disc"></div>
+
+        <!-- 3D Flying Mascot Container -->
+        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to swoop & speak, double-click for 360° roll">
+          <svg viewBox="0 0 240 230" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
+            <!-- Left Wing (Flapping / Gliding) -->
+            <g id="ed-wing-left">
+              <path d="M52 110 C20 95 -15 80 -35 55 C-30 85 -10 115 15 135 C32 148 48 152 56 150 Z" fill="#142E3E"/>
+              <path d="M48 116 C25 104 -2 92 -20 72 C-15 96 2 120 22 136 Z" fill="#1D3D51"/>
+            </g>
+
+            <!-- Right Wing (Flapping / Gliding) -->
+            <g id="ed-wing-right">
+              <path d="M148 110 C180 95 215 80 235 55 C230 85 210 115 185 135 C168 148 152 152 144 150 Z" fill="#142E3E"/>
+              <path d="M152 116 C175 104 202 92 220 72 C215 96 198 120 178 136 Z" fill="#1D3D51"/>
+            </g>
+
+            <!-- Ear Tufts -->
             <g id="ed-ears" style="transition:transform .2s ease;transform-origin:100px 40px">
               <path d="M56 56 L30 20 L84 40 Z" fill="#14303F"/>
               <path d="M144 56 L170 20 L116 40 Z" fill="#14303F"/>
             </g>
-            <!-- body -->
+            <!-- Body & Tail -->
             <path d="M100 26 C151 26 179 66 179 119 C179 173 145 209 100 209 C55 209 21 173 21 119 C21 66 49 26 100 26 Z" fill="#1D3D51"/>
-            <!-- wings -->
-            <path d="M25 114 C25 162 44 194 61 202 C49 172 47 138 51 110 Z" fill="#142E3E"/>
-            <path d="M175 114 C175 162 156 194 139 202 C151 172 153 138 149 110 Z" fill="#142E3E"/>
-            <!-- chest -->
             <path d="M100 158 C118 158 130 170 132 186 C124 198 113 205 100 205 C87 205 76 198 68 186 C70 170 82 158 100 158 Z" fill="#24475D"/>
-            <!-- facial disc -->
+            <!-- Facial Disc & Brow -->
             <path d="M100 42 C144 42 167 74 167 112 C167 148 139 174 100 174 C61 174 33 148 33 112 C33 74 56 42 100 42 Z" fill="#2C5169"/>
-            <!-- brow -->
             <path d="M100 58 C132 58 152 76 156 100 C146 84 126 74 100 74 C74 74 54 84 44 100 C48 76 68 58 100 58 Z" fill="#25455B"/>
             
             <!-- Default Open Eyes Layer -->
@@ -3503,10 +3598,56 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     resetIdleTimer();
   }, { passive: true });
 
-  // 30-Second Drowsy Idle & Alert Wakeup
+  // 3D Flight Physics & Lerp Engine
+  var flightTargetX = 0, flightTargetY = 0;
+  var flightCurX = 0, flightCurY = 0;
+  var flightVelX = 0, flightVelY = 0;
+  var isIdleLooping = false;
+  var idleLoopAngle = 0;
+
+  function flightLoop(){
+    if (owlWrapper && owlWrapper.offsetParent !== null) {
+      if (isIdleLooping) {
+        idleLoopAngle += 0.035;
+        flightTargetX = Math.cos(idleLoopAngle) * 45;
+        flightTargetY = Math.sin(idleLoopAngle * 2) * 18;
+      }
+
+      var prevX = flightCurX, prevY = flightCurY;
+      flightCurX += (flightTargetX - flightCurX) * 0.085;
+      flightCurY += (flightTargetY - flightCurY) * 0.085;
+      flightVelX = flightCurX - prevX;
+      flightVelY = flightCurY - prevY;
+
+      var speed = Math.sqrt(flightVelX * flightVelX + flightVelY * flightVelY);
+
+      // Flap wings when moving fast, glide when slow
+      if (speed > 1.2 && !owlWrapper.classList.contains('ed-flapping')) {
+        owlWrapper.classList.add('ed-flapping');
+      } else if (speed <= 1.2 && owlWrapper.classList.contains('ed-flapping')) {
+        owlWrapper.classList.remove('ed-flapping');
+      }
+
+      var bankZ = Math.max(-22, Math.min(22, flightVelX * 4.5));
+      var pitchX = Math.max(-16, Math.min(16, -flightVelY * 3.5));
+      var yawY = Math.max(-20, Math.min(20, flightCurX * 0.25));
+
+      if (!owlWrapper.classList.contains('ed-barrel-roll') && !owlWrapper.classList.contains('ed-bouncing')) {
+        owlWrapper.style.transform = 'perspective(1000px) translate3d(' + flightCurX.toFixed(2) + 'px, ' + flightCurY.toFixed(2) + 'px, 0) rotateZ(' + bankZ.toFixed(2) + 'deg) rotateX(' + pitchX.toFixed(2) + 'deg) rotateY(' + yawY.toFixed(2) + 'deg)';
+      }
+    }
+    requestAnimationFrame(flightLoop);
+  }
+  requestAnimationFrame(flightLoop);
+
+  // 15-Second Inactivity Lazy Loop & Drowsy Sleep
   function resetIdleTimer(){
+    if (isIdleLooping) {
+      isIdleLooping = false;
+      flightTargetX = 0;
+      flightTargetY = 0;
+    }
     if (currentMood === 'sleep') {
-      // Wake up alert (o_O) for 1.2s before attentive
       setMood('alert');
       setTimeout(function(){
         if (currentMood === 'alert') setMood('attentive');
@@ -3514,115 +3655,88 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     }
     clearTimeout(idleTimer);
     idleTimer = setTimeout(function(){
-      setMood('sleep');
-    }, 30000); // 30 seconds idle
+      // Enter lazy loop for 4 seconds then sleep
+      isIdleLooping = true;
+      idleLoopAngle = 0;
+      setTimeout(function(){
+        isIdleLooping = false;
+        flightTargetX = 0;
+        flightTargetY = 0;
+        setMood('sleep');
+      }, 4200);
+    }, 15000); // 15 seconds idle
   }
   resetIdleTimer();
 
-  window.addEventListener('mousemove', resetIdleTimer, { passive: true });
-  window.addEventListener('touchstart', resetIdleTimer, { passive: true });
-
-  // Multi-Instance 3D Parallax & Eye Tracking on Mouse & Touch
-  var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
-
-  function updateOwlTracking(clientX, clientY){
-    if (currentMood === 'sleep') return;
-
-    allOwls.forEach(function(owl){
-      if (owl.offsetParent === null) return; // Skip hidden views
-      var rect = owl.getBoundingClientRect();
+  // Mouse & Touch Flight Tracking
+  function updateFlightTarget(clientX, clientY){
+    resetIdleTimer();
+    if (owlStage && owlWrapper) {
+      var rect = owlStage.getBoundingClientRect();
       var centerX = rect.left + rect.width / 2;
       var centerY = rect.top + rect.height / 2;
 
-      var deltaX = (clientX - centerX) / (window.innerWidth / 2);
-      var deltaY = (clientY - centerY) / (window.innerHeight / 2);
+      var deltaX = (clientX - centerX);
+      var deltaY = (clientY - centerY);
 
-      var rotateX = -Math.max(-18, Math.min(18, deltaY * 18));
-      var rotateY = Math.max(-22, Math.min(22, deltaX * 22));
+      // Bound flight area
+      flightTargetX = Math.max(-90, Math.min(90, deltaX * 0.35));
+      flightTargetY = Math.max(-60, Math.min(60, deltaY * 0.35));
 
-      owl.style.transform = 'perspective(900px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
-
-      var pupilShiftX = Math.max(-6, Math.min(6, deltaX * 7));
-      var pupilShiftY = Math.max(-5, Math.min(5, deltaY * 6));
-
-      var pL = owl.querySelector('#ed-group-pupil-left, .ed-pupil-left-shared');
-      var pR = owl.querySelector('#ed-group-pupil-right, .ed-pupil-right-shared');
-      if (pL) pL.style.transform = 'translate(' + pupilShiftX + 'px, ' + pupilShiftY + 'px)';
-      if (pR) pR.style.transform = 'translate(' + pupilShiftX + 'px, ' + pupilShiftY + 'px)';
-    });
+      // Pupil tracking
+      var pL = document.getElementById('ed-group-pupil-left');
+      var pR = document.getElementById('ed-group-pupil-right');
+      var pupX = Math.max(-6, Math.min(6, (deltaX / (window.innerWidth / 2)) * 7));
+      var pupY = Math.max(-5, Math.min(5, (deltaY / (window.innerHeight / 2)) * 6));
+      if (pL) pL.style.transform = 'translate(' + pupX + 'px, ' + pupY + 'px)';
+      if (pR) pR.style.transform = 'translate(' + pupX + 'px, ' + pupY + 'px)';
+    }
   }
 
-  // Desktop Mouse Move
   window.addEventListener('mousemove', function(e){
-    updateOwlTracking(e.clientX, e.clientY);
+    updateFlightTarget(e.clientX, e.clientY);
   });
 
-  // Mobile Touch Drag Tracking
   window.addEventListener('touchmove', function(e){
     if (e.touches && e.touches[0]) {
-      updateOwlTracking(e.touches[0].clientX, e.touches[0].clientY);
+      updateFlightTarget(e.touches[0].clientX, e.touches[0].clientY);
     }
   }, { passive: true });
 
-  window.addEventListener('touchstart', function(e){
-    if (e.touches && e.touches[0]) {
-      updateOwlTracking(e.touches[0].clientX, e.touches[0].clientY);
-    }
-  }, { passive: true });
-
-  // Mobile Gyroscope / Device Orientation Tracking
-  if (window.DeviceOrientationEvent) {
-    window.addEventListener('deviceorientation', function(e){
-      if (e.gamma !== null && e.beta !== null) {
-        var gamma = Math.max(-30, Math.min(30, e.gamma)); // Left-to-right tilt
-        var beta = Math.max(10, Math.min(70, e.beta));    // Front-to-back tilt
-        var simulatedX = window.innerWidth / 2 + (gamma / 30) * (window.innerWidth / 2);
-        var simulatedY = window.innerHeight / 2 + ((beta - 40) / 30) * (window.innerHeight / 2);
-        updateOwlTracking(simulatedX, simulatedY);
-      }
-    }, { passive: true });
+  // Click Swoop Effect on Hero Stage
+  if (owlStage) {
+    owlStage.addEventListener('click', function(e){
+      if (e.target.closest('.ed-chip') || e.target.closest('.ed-orbit-btn')) return;
+      var rect = owlStage.getBoundingClientRect();
+      flightTargetX = (e.clientX - (rect.left + rect.width / 2)) * 0.55;
+      flightTargetY = (e.clientY - (rect.top + rect.height / 2)) * 0.55;
+      
+      // Elastic spring bounce
+      owlWrapper.classList.add('ed-bouncing');
+      setTimeout(function(){
+        owlWrapper.classList.remove('ed-bouncing');
+        flightTargetX = 0;
+        flightTargetY = 0;
+      }, 600);
+    });
   }
 
-  allOwls.forEach(function(owl){
-    // Desktop Hover: Smile
-    owl.addEventListener('mouseenter', function(){
-      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
-      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
-      if (happyEyes && openEyes) {
-        happyEyes.style.display = 'block';
-        openEyes.style.display = 'none';
-      }
+  // Double Click / Secret 360° Barrel Roll
+  function triggerBarrelRoll(){
+    if (!owlWrapper) return;
+    owlWrapper.classList.add('ed-barrel-roll');
+    setTimeout(function(){
+      owlWrapper.classList.remove('ed-barrel-roll');
+    }, 900);
+  }
+
+  if (owlWrapper) {
+    owlWrapper.addEventListener('dblclick', function(e){
+      e.preventDefault();
+      triggerBarrelRoll();
+      setMood('cool', "“Strategy unlocked. Handled cleanly. Not a dollar more.”");
     });
-
-    owl.addEventListener('mouseleave', function(){
-      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
-      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
-      if (happyEyes && openEyes && currentMood !== 'happy') {
-        happyEyes.style.display = 'none';
-        openEyes.style.display = 'block';
-      }
-      owl.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
-      var pL = owl.querySelector('#ed-group-pupil-left, .ed-pupil-left-shared');
-      var pR = owl.querySelector('#ed-group-pupil-right, .ed-pupil-right-shared');
-      if (pL) pL.style.transform = 'none';
-      if (pR) pR.style.transform = 'none';
-    });
-
-    // Tap / Click Reaction for Both Mobile & Desktop
-    function triggerOwlReaction(){
-      if (navigator.vibrate) try { navigator.vibrate(20); } catch(e){}
-      
-      // Step 1: Happy smile
-      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
-      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
-      if (happyEyes && openEyes) {
-        happyEyes.style.display = 'block';
-        openEyes.style.display = 'none';
-      }
-
-      // Step 2: Wink & new quote
-      setTimeout(function(){
-        setMood('wink');
+  }
         currentQuoteIndex = (currentQuoteIndex + 1) % edQuotes.length;
         var stage = owl.closest('.ed-3d-stage');
         var b = stage ? stage.querySelector('.ed-speech-bubble') : bubble;
