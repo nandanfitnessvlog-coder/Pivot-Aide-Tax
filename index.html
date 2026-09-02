@@ -3789,19 +3789,21 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
       var speed = Math.sqrt(flightVelX * flightVelX + flightVelY * flightVelY);
 
-      // Flap wings when moving fast, glide when slow
-      if (speed > 1.1 && !owlWrapper.classList.contains('ed-flapping')) {
-        owlWrapper.classList.add('ed-flapping');
-      } else if (speed <= 1.1 && owlWrapper.classList.contains('ed-flapping')) {
-        owlWrapper.classList.remove('ed-flapping');
-      }
+      // Flap wings when moving fast in flight mode
+      if (!owlWrapper.classList.contains('ed-sitting')) {
+        if (speed > 1.1 && !owlWrapper.classList.contains('ed-flapping')) {
+          owlWrapper.classList.add('ed-flapping');
+        } else if (speed <= 1.1 && owlWrapper.classList.contains('ed-flapping')) {
+          owlWrapper.classList.remove('ed-flapping');
+        }
 
-      var bankZ = Math.max(-22, Math.min(22, flightVelX * 4.6));
-      var pitchX = Math.max(-16, Math.min(16, -flightVelY * 3.6));
-      var yawY = Math.max(-20, Math.min(20, flightCurX * 0.26));
+        var bankZ = Math.max(-22, Math.min(22, flightVelX * 4.6));
+        var pitchX = Math.max(-16, Math.min(16, -flightVelY * 3.6));
+        var yawY = Math.max(-20, Math.min(20, flightCurX * 0.26));
 
-      if (!owlWrapper.classList.contains('ed-barrel-roll') && !owlWrapper.classList.contains('ed-bouncing') && !owlWrapper.classList.contains('ed-sitting')) {
-        owlWrapper.style.transform = 'perspective(1000px) translate3d(' + flightCurX.toFixed(2) + 'px, ' + flightCurY.toFixed(2) + 'px, 0px) rotateZ(' + bankZ.toFixed(2) + 'deg) rotateX(' + pitchX.toFixed(2) + 'deg) rotateY(' + yawY.toFixed(2) + 'deg)';
+        if (!owlWrapper.classList.contains('ed-barrel-roll') && !owlWrapper.classList.contains('ed-bouncing')) {
+          owlWrapper.style.transform = 'perspective(1000px) translate3d(' + flightCurX.toFixed(2) + 'px, ' + flightCurY.toFixed(2) + 'px, 0px) rotateZ(' + bankZ.toFixed(2) + 'deg) rotateX(' + pitchX.toFixed(2) + 'deg) rotateY(' + yawY.toFixed(2) + 'deg)';
+        }
       }
     }
     requestAnimationFrame(flightLoop);
@@ -3823,94 +3825,26 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     }
     clearTimeout(idleTimer);
     idleTimer = setTimeout(function(){
-      isIdleLooping = true;
-      idleLoopAngle = 0;
-      setTimeout(function(){
-        isIdleLooping = false;
-        flightTargetX = 0;
-        flightTargetY = 0;
-        setMood('sleep');
-      }, 4200);
-    }, 15000); // 15 seconds idle
+      if (owlWrapper && !owlWrapper.classList.contains('ed-sitting')) {
+        isIdleLooping = true;
+        idleLoopAngle = 0;
+        setTimeout(function(){
+          isIdleLooping = false;
+          flightTargetX = 0;
+          flightTargetY = 0;
+          setMood('sleep');
+        }, 4200);
+      }
+    }, 15000);
   }
   resetIdleTimer();
-
-  // Mouse & Touch Flight Tracking with 4-Second Inactivity Cozy Sage Landing
-  function updateFlightTarget(clientX, clientY){
-    resetIdleTimer();
-    
-    // Switch all owls to flying mode on move
-    allOwls.forEach(function(owl){
-      owl.classList.remove('ed-sitting');
-    });
-
-    clearTimeout(sittingLandingTimer);
-    sittingLandingTimer = setTimeout(function(){
-      // Land into Cozy Sage (˘‿˘) rest state after 4s inactivity
-      allOwls.forEach(function(owl){
-        owl.classList.add('ed-sitting');
-      });
-      setMood('calm');
-    }, 4000);
-
-    if (owlStage && owlWrapper) {
-      var rect = owlStage.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-      var deltaX = (clientX - centerX);
-      var deltaY = (clientY - centerY);
-
-      flightTargetX = Math.max(-85, Math.min(85, deltaX * 0.35));
-      flightTargetY = Math.max(-55, Math.min(55, deltaY * 0.35));
-
-      var pL = document.getElementById('ed-group-pupil-left');
-      var pR = document.getElementById('ed-group-pupil-right');
-      var pupX = Math.max(-6, Math.min(6, (deltaX / (window.innerWidth / 2)) * 7));
-      var pupY = Math.max(-5, Math.min(5, (deltaY / (window.innerHeight / 2)) * 6));
-      if (pL) pL.style.transform = 'translate3d(' + pupX.toFixed(1) + 'px, ' + pupY.toFixed(1) + 'px, 0px)';
-      if (pR) pR.style.transform = 'translate3d(' + pupX.toFixed(1) + 'px, ' + pupY.toFixed(1) + 'px, 0px)';
-    }
-
-    // Secondary owl pupil tracking for other views
-    var sharedPupilsLeft = Array.prototype.slice.call(document.querySelectorAll('.ed-pupil-left-shared'));
-    var sharedPupilsRight = Array.prototype.slice.call(document.querySelectorAll('.ed-pupil-right-shared'));
-    sharedPupilsLeft.forEach(function(p){
-      var r = p.getBoundingClientRect();
-      var dx = clientX - (r.left + r.width / 2);
-      var dy = clientY - (r.top + r.height / 2);
-      var px = Math.max(-6, Math.min(6, (dx / (window.innerWidth / 2)) * 7));
-      var py = Math.max(-5, Math.min(5, (dy / (window.innerHeight / 2)) * 6));
-      p.style.transform = 'translate3d(' + px.toFixed(1) + 'px, ' + py.toFixed(1) + 'px, 0px)';
-    });
-    sharedPupilsRight.forEach(function(p){
-      var r = p.getBoundingClientRect();
-      var dx = clientX - (r.left + r.width / 2);
-      var dy = clientY - (r.top + r.height / 2);
-      var px = Math.max(-6, Math.min(6, (dx / (window.innerWidth / 2)) * 7));
-      var py = Math.max(-5, Math.min(5, (dy / (window.innerHeight / 2)) * 6));
-      p.style.transform = 'translate3d(' + px.toFixed(1) + 'px, ' + py.toFixed(1) + 'px, 0px)';
-    });
-  }
-
-  // Unified Pointer & Touch Listeners
-  window.addEventListener('pointermove', function(e){
-    if (e.pointerType === 'mouse' || isDragging) {
-      updateFlightTarget(e.clientX, e.clientY);
-    }
-  }, { passive: true });
-
-  window.addEventListener('touchmove', function(e){
-    if (e.touches && e.touches[0]) {
-      updateFlightTarget(e.touches[0].clientX, e.touches[0].clientY);
-    }
-  }, { passive: true });
 
   // Mobile Gyroscope Parallax (DeviceOrientationEvent)
   var gyroActive = false;
   function handleOrientation(e){
     if (!gyroActive || prefersReducedMotion) return;
-    var gamma = e.gamma || 0; // Left-to-right tilt (-90 to 90)
-    var beta = e.beta || 0;   // Front-to-back tilt (-180 to 180)
+    var gamma = e.gamma || 0;
+    var beta = e.beta || 0;
     
     var tiltX = Math.max(-25, Math.min(25, gamma * 0.75));
     var tiltY = Math.max(-20, Math.min(20, (beta - 45) * 0.65));
@@ -3928,7 +3862,6 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
   function initGyro(){
     if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      // iOS 13+ permission flow
       document.addEventListener('pointerdown', function requestPermissionOnce(){
         DeviceOrientationEvent.requestPermission().then(function(state){
           if (state === 'granted') {
@@ -3946,122 +3879,158 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   initGyro();
 
   // 360° Aerial Barrel Roll Animation Trigger
-  function triggerBarrelRoll(){
-    if (!owlWrapper) return;
-    owlWrapper.classList.add('ed-barrel-roll');
+  function triggerBarrelRoll(targetOwl){
+    var o = targetOwl || owlWrapper;
+    if (!o) return;
+    o.classList.add('ed-barrel-roll');
     setTimeout(function(){
-      owlWrapper.classList.remove('ed-barrel-roll');
+      o.classList.remove('ed-barrel-roll');
     }, 900);
   }
 
-  // Unified Pointer Gestures: Single Tap vs Double Tap vs Touch Drag
-  var lastTapTime = 0;
-  var isDragging = false;
-  var pointerStartX = 0, pointerStartY = 0;
+  // Stage-based flight and sitting management for ALL owls across views
+  var allStages = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-stage'));
+  allStages.forEach(function(stage){
+    var owl = stage.querySelector('.ed-3d-wrapper');
+    if (!owl) return;
 
-  if (owlWrapper) {
-    owlWrapper.addEventListener('pointerdown', function(e){
-      isDragging = true;
-      pointerStartX = e.clientX;
-      pointerStartY = e.clientY;
-      try { owlWrapper.setPointerCapture(e.pointerId); } catch(err){}
-      owlWrapper.classList.remove('ed-sitting');
-      resetIdleTimer();
+    var isInteracting = false;
+    var leaveTimer = null;
+    var lastTapTime = 0;
+    var startX = 0, startY = 0;
+
+    // Pointer events for desktop hover & mobile touch
+    stage.addEventListener('pointerenter', function(){
+      clearTimeout(leaveTimer);
     });
 
-    owlWrapper.addEventListener('pointermove', function(e){
-      if (isDragging) {
-        updateFlightTarget(e.clientX, e.clientY);
+    stage.addEventListener('pointermove', function(e){
+      if (e.pointerType === 'touch' && !isInteracting) return;
+      clearTimeout(leaveTimer);
+      var rect = stage.getBoundingClientRect();
+      var centerX = rect.left + rect.width / 2;
+      var centerY = rect.top + rect.height / 2;
+      var dx = e.clientX - centerX;
+      var dy = e.clientY - centerY;
+
+      if (owl === owlWrapper) {
+        flightTargetX = Math.max(-85, Math.min(85, dx * 0.35));
+        flightTargetY = Math.max(-55, Math.min(55, dy * 0.35));
+        owl.classList.remove('ed-sitting');
+      } else {
+        var tx = Math.max(-45, Math.min(45, dx * 0.3));
+        var ty = Math.max(-30, Math.min(30, dy * 0.3));
+        var bZ = Math.max(-15, Math.min(15, dx * 0.12));
+        var pX = Math.max(-12, Math.min(12, -dy * 0.1));
+        var yY = Math.max(-15, Math.min(15, dx * 0.08));
+
+        owl.classList.remove('ed-sitting');
+        owl.classList.add('ed-flapping');
+        if (!owl.classList.contains('ed-barrel-roll') && !owl.classList.contains('ed-bouncing')) {
+          owl.style.transform = 'perspective(1000px) translate3d(' + tx.toFixed(1) + 'px, ' + ty.toFixed(1) + 'px, 0px) rotateZ(' + bZ.toFixed(1) + 'deg) rotateX(' + pX.toFixed(1) + 'deg) rotateY(' + yY.toFixed(1) + 'deg)';
+        }
       }
+
+      // Track pupils
+      var pupL = owl.querySelector('#ed-group-pupil-left, .ed-pupil-left-shared');
+      var pupR = owl.querySelector('#ed-group-pupil-right, .ed-pupil-right-shared');
+      var px = Math.max(-6, Math.min(6, (dx / (rect.width / 2)) * 6));
+      var py = Math.max(-5, Math.min(5, (dy / (rect.height / 2)) * 5));
+      if (pupL) pupL.style.transform = 'translate3d(' + px.toFixed(1) + 'px, ' + py.toFixed(1) + 'px, 0px)';
+      if (pupR) pupR.style.transform = 'translate3d(' + px.toFixed(1) + 'px, ' + py.toFixed(1) + 'px, 0px)';
+
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(function(){
+        owl.classList.remove('ed-flapping');
+        owl.classList.add('ed-sitting');
+        if (owl !== owlWrapper) owl.style.transform = '';
+      }, 2500);
     });
 
-    owlWrapper.addEventListener('pointerup', function(e){
-      if (!isDragging) return;
-      isDragging = false;
-      try { owlWrapper.releasePointerCapture(e.pointerId); } catch(err){}
+    stage.addEventListener('pointerleave', function(){
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(function(){
+        owl.classList.remove('ed-flapping');
+        owl.classList.add('ed-sitting');
+        if (owl !== owlWrapper) owl.style.transform = '';
+        if (owl === owlWrapper) {
+          flightTargetX = 0;
+          flightTargetY = 0;
+          owl.style.transform = '';
+        }
+      }, 400);
+    });
+
+    // Touch and click gesture handling
+    owl.addEventListener('pointerdown', function(e){
+      isInteracting = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      owl.classList.remove('ed-sitting');
+      try { owl.setPointerCapture(e.pointerId); } catch(err){}
+    });
+
+    owl.addEventListener('pointerup', function(e){
+      if (!isInteracting) return;
+      isInteracting = false;
+      try { owl.releasePointerCapture(e.pointerId); } catch(err){}
       
-      var dist = Math.hypot(e.clientX - pointerStartX, e.clientY - pointerStartY);
+      var dist = Math.hypot(e.clientX - startX, e.clientY - startY);
       var now = Date.now();
       var tapDelta = now - lastTapTime;
       lastTapTime = now;
 
-      if (dist < 12) {
-        // Tap gesture detected!
+      if (dist < 14) {
         if (tapDelta < 320) {
-          // Double Tap: 360° Aerial Spin + Gold Aviator Sunglasses (⌐■_■)
+          // Double Tap / Click: 360° Barrel roll + Aviator sunglasses
           if (navigator.vibrate) try { navigator.vibrate([40, 30, 60]); } catch(v){}
-          triggerBarrelRoll();
-          setMood('cool', "“Strategy unlocked. Handled cleanly. Not a dollar more.”");
+          triggerBarrelRoll(owl);
+          if (owl === owlWrapper) setMood('cool', "“Strategy unlocked. Handled cleanly. Not a dollar more.”");
         } else {
-          // Single Tap: Happy Perched Reaction (^‿^) + Haptic Vibration + Audio Chime
+          // Single Tap / Click: Chime + Bounce + Quote + Wink
           if (navigator.vibrate) try { navigator.vibrate(40); } catch(v){}
           playOwlChirp();
-          owlWrapper.classList.add('ed-bouncing', 'ed-wiggle-ears');
-          setTimeout(function(){ owlWrapper.classList.remove('ed-bouncing', 'ed-wiggle-ears'); }, 600);
-          setMood('happy');
+          owl.classList.add('ed-bouncing', 'ed-wiggle-ears');
+          setTimeout(function(){ owl.classList.remove('ed-bouncing', 'ed-wiggle-ears'); }, 600);
+
+          var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
+          var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
+          if (happyEyes && openEyes) {
+            happyEyes.style.display = 'block';
+            openEyes.style.display = 'none';
+          }
+
+          setTimeout(function(){
+            currentQuoteIndex = (currentQuoteIndex + 1) % edQuotes.length;
+            var b = stage.querySelector('.ed-speech-bubble');
+            if (b) {
+              b.textContent = edQuotes[currentQuoteIndex];
+              b.style.transform = 'scale3d(1.05, 1.05, 1)';
+              setTimeout(function(){ b.style.transform = 'none'; }, 250);
+            }
+          }, 350);
+
+          setTimeout(function(){
+            if (happyEyes && openEyes) {
+              happyEyes.style.display = 'none';
+              openEyes.style.display = 'block';
+            }
+          }, 1600);
         }
       }
+
+      leaveTimer = setTimeout(function(){
+        owl.classList.remove('ed-flapping');
+        owl.classList.add('ed-sitting');
+        owl.style.transform = '';
+      }, 2000);
     });
 
-    owlWrapper.addEventListener('pointercancel', function(e){
-      isDragging = false;
-      try { owlWrapper.releasePointerCapture(e.pointerId); } catch(err){}
-    });
-  }
-
-  // Multi-Instance Reactions for Other Owls Across Views
-  var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
-  allOwls.forEach(function(owl){
-    owl.addEventListener('pointerenter', function(){
-      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
-      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
-      if (happyEyes && openEyes) {
-        happyEyes.style.display = 'block';
-        openEyes.style.display = 'none';
-      }
-    });
-
-    owl.addEventListener('pointerleave', function(){
-      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
-      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
-      if (happyEyes && openEyes && currentMood !== 'happy') {
-        happyEyes.style.display = 'none';
-        openEyes.style.display = 'block';
-      }
-    });
-
-    owl.addEventListener('click', function(e){
-      if (owl === owlWrapper) return; // Handled by pointer engine
-      if (navigator.vibrate) try { navigator.vibrate(40); } catch(v){}
-      playOwlChirp();
-      owl.classList.add('ed-bouncing', 'ed-wiggle-ears');
-      setTimeout(function(){ owl.classList.remove('ed-bouncing', 'ed-wiggle-ears'); }, 600);
-
-      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
-      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
-      if (happyEyes && openEyes) {
-        happyEyes.style.display = 'block';
-        openEyes.style.display = 'none';
-      }
-      setTimeout(function(){
-        setMood('wink');
-        currentQuoteIndex = (currentQuoteIndex + 1) % edQuotes.length;
-        var stage = owl.closest('.ed-3d-stage');
-        var b = stage ? stage.querySelector('.ed-speech-bubble') : bubble;
-        if (b) {
-          b.textContent = edQuotes[currentQuoteIndex];
-          b.style.transform = 'scale3d(1.05, 1.05, 1)';
-          setTimeout(function(){ b.style.transform = 'none'; }, 250);
-        }
-      }, 350);
-
-      setTimeout(function(){
-        if (happyEyes && openEyes) {
-          happyEyes.style.display = 'none';
-          openEyes.style.display = 'block';
-        }
-        if (currentMood === 'wink') setMood('attentive');
-      }, 1600);
+    owl.addEventListener('pointercancel', function(e){
+      isInteracting = false;
+      try { owl.releasePointerCapture(e.pointerId); } catch(err){}
+      owl.classList.add('ed-sitting');
+      owl.style.transform = '';
     });
   });
 
