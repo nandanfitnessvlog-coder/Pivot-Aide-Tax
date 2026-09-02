@@ -1,0 +1,100 @@
+PIVOT AIDE TAX - WEBSITE PACKAGE
+Prepared 1 September 2026
+
+
+WHAT IS IN THIS FOLDER
+----------------------
+
+1 - Site Prototype (open in any browser).html
+    The working prototype of the restructured pivotaidetax.com.
+    Double-click it. It opens in Chrome, Safari, Edge or Firefox on
+    Windows, Mac or Linux. Nothing to install.
+
+    Nine sections across the top: Home, File Taxes, Tax Strategy,
+    Audit & Resolution, Business, Free Help, Resources, Appointments,
+    Meet Uncle Ed. Click between them.
+
+    Everything is inside this one file - no images folder, no
+    stylesheet, nothing to lose when you email or copy it.
+
+2 - Site Prototype (PDF version).pdf
+    The same nine sections as a PDF, one long page each, for anyone
+    who would rather not open an HTML file, or who wants to mark it up.
+    Opens in Preview, Acrobat, or a browser.
+
+3 - Service Architecture and Uncle Ed Brand File.pdf
+    The 13-page written strategy behind the prototype: what is wrong
+    with the current site, the four-layer offering model, pricing,
+    the audit and resolution tiers, the Uncle Ed persona and voice
+    rules, the revised navigation, and the decisions still open.
+
+
+THE STANDING FILE
+-----------------
+
+The flagship engagement is on the Tax Strategy section. It is the
+year-round package for high-income individuals and business owners:
+a dedicated advisor, four scheduled strategy sessions a year, a
+written strategy plan, a mid-year projection, unlimited questions,
+and every return, estimate and notice handled inside one annual fee.
+
+Two tracks - Track A for high-income individuals, Track B for
+business owners and entities.
+
+No price is published. It is quoted after a free 45-minute scoping
+call and a Second Look at three prior returns. It is deliberately the
+only offer on the site without a number next to it.
+
+
+HOW TO SEND THIS TO SOMEONE ELSE
+--------------------------------
+
+Send the whole folder, or the .zip file that sits beside it. If you
+are emailing only one file, send the PDF (item 2) - some email systems
+strip .html attachments.
+
+
+A NOTE ON FONTS
+---------------
+
+The prototype uses three web fonts (Fraunces, Poppins, JetBrains Mono)
+loaded from Google Fonts. On a computer with internet they load
+automatically. With no internet, the page falls back to system fonts -
+the layout, colours and content are unaffected, only the lettering
+changes slightly. Nothing breaks either way.
+
+
+BEFORE ANY OF THIS GOES LIVE
+----------------------------
+
+Three things are still open, and two of them are decisions only you
+can make. They are set out in full on the last page of the strategy
+file (Exhibit L):
+
+  1. Which Circular 230 credential covers IRS representation, and
+     whose name signs the Form 2848. This gates the whole Audit &
+     Resolution section - and The Standing File, which includes
+     examination representation. Do not publish either until this
+     is answered.
+
+  2. Business return pricing. The prototype shows $750 and $1,250;
+     the live site currently shows $550 for both. Proposed, not
+     confirmed.
+
+  3. The legal standing of Pivot Aide Tax - its own registered entity,
+     or an assumed name of Pivot Aide Consulting. The brands now
+     present separately, but if it is an assumed name the legal name
+     still has to appear somewhere a client can find it, normally the
+     terms and the engagement letter.
+
+The Uncle Ed owl in the prototype is a placeholder mark. The art
+direction for the real thing is in Exhibit J of the strategy file.
+
+Tax figures on the Tax Resources section are for tax year 2026 and
+come from IRS Revenue Procedure 2025-32, IRS Notice IR-2025-111,
+Revenue Procedure 2025-19 and the 2026 standard mileage announcement.
+They will need refreshing when the IRS publishes the 2027 numbers.
+
+
+Pivot Aide Tax
+1 (571) 470-3754  -  tgeorge@pivotaide.com
