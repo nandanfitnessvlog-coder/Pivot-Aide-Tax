@@ -762,7 +762,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 .ed-speech-bubble{
   background:rgba(11,44,62,.94); color:#fff; border:1px solid var(--gold); border-radius:10px;
   padding:12px 16px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
-  position:relative; margin-bottom:12px; max-width:280px; text-align:center;
+  position:relative; margin-bottom:12px; max-width:290px; text-align:center;
   box-shadow:0 10px 28px rgba(0,0,0,.4); backdrop-filter:blur(8px);
   transition:transform .2s ease, border-color .2s ease; transform-origin:bottom center;
 }
@@ -771,10 +771,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   border-width:7px 7px 0 7px; border-style:solid; border-color:var(--gold) transparent transparent transparent;
 }
 .ed-quick-chips{
-  display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:14px; max-width:300px;
+  display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:14px; max-width:320px;
 }
 .ed-chip{
-  font-family:var(--f-mono); font-size:.65rem; padding:4px 9px; border-radius:12px;
+  font-family:var(--f-mono); font-size:.65rem; padding:5px 10px; border-radius:12px;
   background:rgba(255,255,255,.07); border:1px solid var(--night-line); color:var(--night-ink-2);
   cursor:pointer; transition:all .16s ease; white-space:nowrap;
 }
@@ -789,6 +789,43 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 .ed-3d-wrapper:hover, .ed-3d-wrapper.active-glow{
   filter:drop-shadow(0 0 20px rgba(1,159,255,.5)) drop-shadow(0 20px 35px rgba(0,0,0,.45));
 }
+
+/* Tactile Micro-Interactions */
+.ed-3d-wrapper:active{
+  transform:scale(0.92, 0.88) translateY(6px) !important;
+  transition:transform .06s ease !important;
+}
+.ed-bouncing{
+  animation:ed-squash-bounce .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+@keyframes ed-squash-bounce{
+  0%{ transform:scale(0.92, 0.88) translateY(6px); }
+  50%{ transform:scale(1.06, 1.1) translateY(-10px); }
+  100%{ transform:scale(1, 1) translateY(0); }
+}
+
+.ed-feather-ruffle{
+  animation:ed-ruffle .4s ease-in-out !important;
+}
+@keyframes ed-ruffle{
+  0%, 100%{ transform:rotate(0deg); }
+  25%{ transform:rotate(-3.5deg) scaleY(1.04); }
+  75%{ transform:rotate(3.5deg) scaleY(0.96); }
+}
+
+.ed-calm-aura{
+  animation:ed-sage-glow 2.4s ease-in-out infinite alternate !important;
+}
+@keyframes ed-sage-glow{
+  0%{ filter:drop-shadow(0 0 10px rgba(1,159,255,.35)) drop-shadow(0 15px 25px rgba(0,0,0,.4)); }
+  100%{ filter:drop-shadow(0 0 30px rgba(1,159,255,.9)) drop-shadow(0 20px 35px rgba(0,0,0,.5)); }
+}
+
+.ed-laser-focus{
+  transform:perspective(900px) translateZ(30px) scale(1.04) !important;
+  filter:drop-shadow(0 0 22px rgba(234,228,47,.7)) drop-shadow(0 20px 35px rgba(0,0,0,.5)) !important;
+}
+
 .ed-talking #ed-beak, .ed-talking .ed-beak-shared{
   animation:ed-talk .24s ease-in-out infinite alternate !important;
 }
@@ -906,12 +943,12 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
           &ldquo;Uncle Sam handles compliance. I handle strategy.&rdquo;
         </div>
         <div class="ed-quick-chips">
-          <button class="ed-chip" data-ask="strategy">💡 Why strategy?</button>
-          <button class="ed-chip" data-ask="notice">📩 Got an IRS letter?</button>
-          <button class="ed-chip" data-ask="scorp">🏢 S-Corp savings?</button>
-          <button class="ed-chip" data-ask="secret">✨ Uncle Ed secret</button>
+          <button class="ed-chip" data-ask="deductions">💰 Max My Deductions</button>
+          <button class="ed-chip" data-ask="panic">⏳ April Panic?</button>
+          <button class="ed-chip" data-ask="audit">🛡️ Audit Armor</button>
+          <button class="ed-chip" data-ask="secret">✨ Secret Strategy</button>
         </div>
-        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for secret">
+        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for cool sunglasses">
           <svg viewBox="0 0 200 220" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
             <!-- ear tufts -->
             <g id="ed-ears" style="transition:transform .2s ease;transform-origin:100px 40px">
@@ -951,12 +988,49 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               </g>
             </g>
 
-            <!-- Happy Smiling Eyes (^_^) -->
+            <!-- 1. Happy / Joy Eyes (^‿^) -->
             <g id="ed-eyes-happy" style="display:none">
-              <path d="M 48 114 Q 71 86 94 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-              <path d="M 52 113 Q 71 89 90 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
-              <path d="M 106 114 Q 129 86 152 114" fill="none" stroke="#F2F8FC" stroke-width="7" stroke-linecap="round"/>
-              <path d="M 110 113 Q 129 89 148 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
+              <path d="M 46 115 Q 71 82 96 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+              <path d="M 50 114 Q 71 86 92 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
+              <path d="M 104 115 Q 129 82 154 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
+              <path d="M 108 114 Q 129 86 150 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- 2. Laser Focus Eyes (•̀_•́) -->
+            <g id="ed-eyes-focus" style="display:none">
+              <circle cx="71" cy="107" r="24" fill="#F2F8FC"/>
+              <circle cx="129" cy="107" r="24" fill="#F2F8FC"/>
+              <!-- Dilated pupils (130%) -->
+              <circle cx="71" cy="107" r="20" fill="#019FFF"/>
+              <circle cx="71" cy="107" r="11" fill="#06202D"/>
+              <circle cx="63" cy="100" r="4.5" fill="#FFFFFF"/>
+              <circle cx="129" cy="107" r="20" fill="#019FFF"/>
+              <circle cx="129" cy="107" r="11" fill="#06202D"/>
+              <circle cx="121" cy="100" r="4.5" fill="#FFFFFF"/>
+              <!-- Inward slanted sharp brows -->
+              <path d="M46 84 L96 99" stroke="#EAE42F" stroke-width="5.5" stroke-linecap="round"/>
+              <path d="M154 84 L104 99" stroke="#EAE42F" stroke-width="5.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- 3. Sage / Calm Eyes (˘‿˘) -->
+            <g id="ed-eyes-calm" style="display:none">
+              <path d="M 48 102 Q 71 122 94 102" fill="none" stroke="#F2F8FC" stroke-width="6.5" stroke-linecap="round"/>
+              <path d="M 52 103 Q 71 119 90 103" fill="none" stroke="#019FFF" stroke-width="3.5" stroke-linecap="round"/>
+              <path d="M 106 102 Q 129 122 152 102" fill="none" stroke="#F2F8FC" stroke-width="6.5" stroke-linecap="round"/>
+              <path d="M 110 103 Q 129 119 148 103" fill="none" stroke="#019FFF" stroke-width="3.5" stroke-linecap="round"/>
+            </g>
+
+            <!-- 4. Alert Wakeup Eyes (o_O) -->
+            <g id="ed-eyes-alert" style="display:none">
+              <circle cx="69" cy="105" r="28" fill="#F2F8FC"/>
+              <circle cx="69" cy="105" r="18" fill="#019FFF"/>
+              <circle cx="69" cy="105" r="9" fill="#06202D"/>
+              <circle cx="63" cy="99" r="4" fill="#FFFFFF"/>
+              <!-- Narrow squinched right eye -->
+              <circle cx="131" cy="108" r="18" fill="#F2F8FC"/>
+              <circle cx="131" cy="108" r="10" fill="#019FFF"/>
+              <circle cx="131" cy="108" r="5" fill="#06202D"/>
+              <path d="M112 94 L150 100" stroke="#1D3D51" stroke-width="4.5" stroke-linecap="round"/>
             </g>
 
             <!-- Wink Left Eye (';^)') -->
@@ -965,13 +1039,14 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               <path d="M 52 113 Q 71 91 90 113" fill="none" stroke="#019FFF" stroke-width="4" stroke-linecap="round"/>
             </g>
 
-            <!-- Sleeping Eyes (--_--) -->
+            <!-- Sleeping Eyes (-.- zZ) -->
             <g id="ed-eyes-sleep" style="display:none">
               <path d="M 48 108 L 94 108" fill="none" stroke="#F2F8FC" stroke-width="6" stroke-linecap="round"/>
               <path d="M 106 108 L 152 108" fill="none" stroke="#F2F8FC" stroke-width="6" stroke-linecap="round"/>
+              <text x="145" y="70" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="bold" fill="#EAE42F" opacity=".85">zZ</text>
             </g>
 
-            <!-- Cool Sunglasses Easter Egg -->
+            <!-- 5. Cool Sunglasses Easter Egg (⌐■_■) -->
             <g id="ed-sunglasses" style="display:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))">
               <path d="M40 95 C40 85 96 85 96 95 C96 118 40 118 40 95 Z" fill="#0A1821" stroke="#EAE42F" stroke-width="3.5"/>
               <path d="M104 95 C104 85 160 85 160 95 C160 118 104 118 104 95 Z" fill="#0A1821" stroke="#EAE42F" stroke-width="3.5"/>
@@ -3243,6 +3318,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   var edBeak = document.getElementById('ed-beak');
   var sunglasses = document.getElementById('ed-sunglasses');
 
+  var eyesFocus = document.getElementById('ed-eyes-focus');
+  var eyesCalm = document.getElementById('ed-eyes-calm');
+  var eyesAlert = document.getElementById('ed-eyes-alert');
+
   var edQuotes = [
     "“Uncle Sam isn’t the enemy. He’s just very organised. So are we.”",
     "“That letter has a deadline on it. Send it over. We’ll read it today.”",
@@ -3253,11 +3332,12 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   ];
   var currentQuoteIndex = 0;
   var currentMood = 'attentive';
+  var idleTimer = null;
 
   function speakText(text, onComplete){
     if (owlStage) owlStage.classList.add('ed-talking');
     
-    // Optional Web Speech API synthesis
+    // Web Speech API synthesis
     if ('speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
@@ -3281,22 +3361,62 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     }
   }
 
-  function setMood(mood, customText){
-    currentMood = mood;
-
+  function hideAllEyeLayers(){
     if (eyesOpen) eyesOpen.style.display = 'none';
     if (eyesHappy) eyesHappy.style.display = 'none';
+    if (eyesFocus) eyesFocus.style.display = 'none';
+    if (eyesCalm) eyesCalm.style.display = 'none';
+    if (eyesAlert) eyesAlert.style.display = 'none';
     if (winkLeft) winkLeft.style.display = 'none';
     if (eyesSleep) eyesSleep.style.display = 'none';
+    if (sunglasses) sunglasses.style.display = 'none';
+    if (owlWrapper) {
+      owlWrapper.classList.remove('ed-calm-aura');
+      owlWrapper.classList.remove('ed-laser-focus');
+    }
+  }
+
+  function setMood(mood, customText){
+    currentMood = mood;
+    resetIdleTimer();
+    hideAllEyeLayers();
 
     var quoteText = customText || edQuotes[currentQuoteIndex];
 
-    if (mood === 'happy') {
+    if (mood === 'happy' || mood === 'joy') {
+      // 1. Joy (^‿^)
       if (eyesHappy) eyesHappy.style.display = 'block';
-      quoteText = customText || "“Always good to see you! What can we plan today?”";
+      if (edEars) edEars.style.transform = 'translateY(-3px) scale(1.06)';
+      if (edBeak) edBeak.style.transform = 'translateY(1.5px)';
       if (bubble) bubble.textContent = quoteText;
-      if (edEars) edEars.style.transform = 'translateY(-2px) scale(1.04)';
       speakText(quoteText);
+    } else if (mood === 'focus') {
+      // 2. Laser Focus (•̀_•́)
+      if (eyesFocus) eyesFocus.style.display = 'block';
+      if (owlWrapper) owlWrapper.classList.add('ed-laser-focus');
+      if (edEars) edEars.style.transform = 'translateY(-1px)';
+      if (bubble) bubble.textContent = quoteText;
+      speakText(quoteText);
+    } else if (mood === 'calm' || mood === 'sage') {
+      // 3. Sage / Calm (˘‿˘)
+      if (eyesCalm) eyesCalm.style.display = 'block';
+      if (owlWrapper) owlWrapper.classList.add('ed-calm-aura');
+      if (edEars) edEars.style.transform = 'translateY(1px)';
+      if (bubble) bubble.textContent = quoteText;
+      speakText(quoteText);
+    } else if (mood === 'cool' || mood === 'aviator') {
+      // 4. Cool Aviator (⌐■_■)
+      if (sunglasses) sunglasses.style.display = 'block';
+      if (owlWrapper) {
+        owlWrapper.classList.add('ed-spinning');
+        setTimeout(function(){ owlWrapper.classList.remove('ed-spinning'); }, 700);
+      }
+      if (bubble) bubble.textContent = quoteText;
+      speakText(quoteText);
+    } else if (mood === 'alert') {
+      // Alert Wakeup (o_O)
+      if (eyesAlert) eyesAlert.style.display = 'block';
+      if (edEars) edEars.style.transform = 'translateY(-4px) scale(1.08)';
     } else if (mood === 'wink') {
       if (eyesOpen) eyesOpen.style.display = 'block';
       if (winkLeft) winkLeft.style.display = 'block';
@@ -3305,10 +3425,11 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       if (edBeak) edBeak.style.transform = 'translateY(2px)';
       setTimeout(function(){ if (edBeak) edBeak.style.transform = 'none'; }, 400);
     } else if (mood === 'sleep') {
+      // Drowsy Sleep (-.- zZ)
       if (eyesSleep) eyesSleep.style.display = 'block';
-      quoteText = customText || "“Books reconciled, ledgers balanced. Sleeping easy.”";
+      quoteText = "“Books reconciled, ledgers balanced. Sleeping easy... zZ”";
       if (bubble) bubble.textContent = quoteText;
-      if (edEars) edEars.style.transform = 'translateY(2px)';
+      if (edEars) edEars.style.transform = 'translateY(3px)';
     } else {
       // Attentive default
       if (eyesOpen) eyesOpen.style.display = 'block';
@@ -3318,56 +3439,88 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     }
   }
 
-  // Interactive Quick Prompt Chips
+  // Interactive Question Chips matching exact specifications
   var chips = Array.prototype.slice.call(document.querySelectorAll('.ed-chip'));
-  var chipAnswers = {
-    strategy: "“Strategy is what you do during the 11 months before April. That is what decides your number.”",
-    notice: "“That letter has a deadline on it. Send it over free. Most notices are wrong about basis.”",
-    scorp: "“Once your net profit tops $75k, an S-Corp saves you thousands in self-employment taxes.”",
-    secret: "“Strategy unlocked. Handled cleanly. Not a dollar more.”"
+  var chipHandlers = {
+    deductions: {
+      mood: 'joy',
+      quote: "“Don't leave legal money on the table. Depreciation, home office, vehicle mileage—documented upfront.”"
+    },
+    panic: {
+      mood: 'calm',
+      quote: "“Breathe. April is just arithmetic. File the extension today and let's structure the current year cleanly.”"
+    },
+    audit: {
+      mood: 'focus',
+      quote: "“The IRS counts on disorganization. We respond with cold, clean documentation before the 30-day deadline.”"
+    },
+    secret: {
+      mood: 'cool',
+      quote: "“Strategy unlocked. Handled cleanly. Not a dollar more.”"
+    }
   };
 
   chips.forEach(function(chip){
     chip.addEventListener('click', function(e){
       e.stopPropagation();
       var key = chip.dataset.ask;
-      if (key === 'secret') {
-        toggleSunglasses(true);
-        if (owlWrapper) {
-          owlWrapper.classList.add('ed-spinning');
-          setTimeout(function(){ owlWrapper.classList.remove('ed-spinning'); }, 700);
-        }
+      if (chipHandlers[key]) {
+        setMood(chipHandlers[key].mood, chipHandlers[key].quote);
       }
-      setMood(key === 'secret' ? 'wink' : 'attentive', chipAnswers[key]);
     });
   });
 
-  function toggleSunglasses(forceState){
-    if (!sunglasses) return;
-    var isShowing = forceState !== undefined ? forceState : (sunglasses.style.display !== 'none');
-    if (isShowing && forceState === undefined) {
-      sunglasses.style.display = 'none';
-      if (eyesOpen) eyesOpen.style.display = 'block';
-    } else {
-      sunglasses.style.display = 'block';
-      if (eyesOpen) eyesOpen.style.display = 'none';
-      if (eyesHappy) eyesHappy.style.display = 'none';
-      if (winkLeft) winkLeft.style.display = 'none';
-    }
-  }
-
+  // Tactile Micro-Interactions: Click Squash-and-Stretch Bounce
   if (owlWrapper) {
+    owlWrapper.addEventListener('mouseup', function(){
+      owlWrapper.classList.add('ed-bouncing');
+      setTimeout(function(){ owlWrapper.classList.remove('ed-bouncing'); }, 550);
+    });
+
     // Double click easter egg
     owlWrapper.addEventListener('dblclick', function(e){
       e.preventDefault();
-      toggleSunglasses();
-      if (owlWrapper) {
-        owlWrapper.classList.add('ed-spinning');
-        setTimeout(function(){ owlWrapper.classList.remove('ed-spinning'); }, 700);
-      }
-      setMood('wink', "“Looking cool. Numbers balanced. Taxes optimized.”");
+      setMood('cool', "“Looking cool. Numbers balanced. Taxes optimized.”");
     });
   }
+
+  // Tactile Micro-Interactions: Feather Ruffle on Fast Scroll
+  var lastScrollY = window.scrollY;
+  var lastScrollTime = Date.now();
+  window.addEventListener('scroll', function(){
+    var now = Date.now();
+    var dt = now - lastScrollTime;
+    if (dt > 40) {
+      var dy = Math.abs(window.scrollY - lastScrollY);
+      var velocity = dy / dt;
+      if (velocity > 1.6 && owlWrapper && !owlWrapper.classList.contains('ed-feather-ruffle')) {
+        owlWrapper.classList.add('ed-feather-ruffle');
+        setTimeout(function(){ owlWrapper.classList.remove('ed-feather-ruffle'); }, 450);
+      }
+      lastScrollY = window.scrollY;
+      lastScrollTime = now;
+    }
+    resetIdleTimer();
+  }, { passive: true });
+
+  // 30-Second Drowsy Idle & Alert Wakeup
+  function resetIdleTimer(){
+    if (currentMood === 'sleep') {
+      // Wake up alert (o_O) for 1.2s before attentive
+      setMood('alert');
+      setTimeout(function(){
+        if (currentMood === 'alert') setMood('attentive');
+      }, 1200);
+    }
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function(){
+      setMood('sleep');
+    }, 30000); // 30 seconds idle
+  }
+  resetIdleTimer();
+
+  window.addEventListener('mousemove', resetIdleTimer, { passive: true });
+  window.addEventListener('touchstart', resetIdleTimer, { passive: true });
 
   // Multi-Instance 3D Parallax & Eye Tracking on Mouse & Touch
   var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
