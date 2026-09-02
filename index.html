@@ -451,6 +451,12 @@ footer .wm{ font-family:var(--f-display); font-size:1.05rem; color:#fff; font-we
   footer .cols{ grid-template-columns:1fr; }
   .calc-slider-wrap{ flex-wrap:wrap; }
   .calc-number{ width:100%; text-align:center; }
+
+  /* Mobile Responsive Uncle Ed Mascot Stages */
+  .ed-3d-stage{ min-height:290px; max-width:320px; margin:16px auto 0; padding-bottom:8px; }
+  .ed-3d-wrapper{ width:210px !important; height:230px !important; }
+  .ed-portal-disc{ width:180px !important; height:38px !important; bottom:8px !important; }
+  .ed-speech-bubble{ font-size:.82rem !important; padding:8px 14px !important; max-width:270px !important; margin-bottom:8px !important; }
 }
 
 /* ---------- thesis: Ed vs Sam ---------- */
@@ -760,12 +766,12 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 /* ---------- 3D interactive Uncle Ed character & Flight Stage ---------- */
 .ed-3d-stage{
   perspective:1000px; display:flex; flex-direction:column; align-items:center;
-  position:relative; user-select:none; width:100%; max-width:420px; min-height:410px; margin:0 auto;
+  position:relative; user-select:none; width:100%; max-width:420px; min-height:330px; margin:0 auto; padding-bottom:12px;
 }
 .ed-speech-bubble{
   background:rgba(11,44,62,.95); color:#fff; border:1px solid var(--gold); border-radius:10px;
-  padding:12px 18px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
-  position:relative; margin-bottom:14px; max-width:300px; text-align:center;
+  padding:11px 16px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
+  position:relative; margin-bottom:12px; max-width:300px; text-align:center;
   box-shadow:0 12px 30px rgba(0,0,0,.45); backdrop-filter:blur(8px);
   transition:transform .22s ease, border-color .22s ease; transform-origin:bottom center;
   z-index:25;
@@ -777,10 +783,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
 /* Glowing Cyan Flight Portal */
 .ed-portal-disc{
-  position:absolute; width:220px; height:50px; bottom:12px; left:50%;
+  position:absolute; width:220px; height:46px; bottom:12px; left:50%;
   transform:translateX(-50%) rotateX(72deg); border-radius:50%;
-  background:radial-gradient(ellipse at center, rgba(1,159,255,.5) 0%, rgba(1,159,255,.15) 50%, transparent 75%);
-  border:2px solid rgba(1,159,255,.65); box-shadow:0 0 35px rgba(1,159,255,.8), inset 0 0 20px rgba(1,159,255,.5);
+  background:radial-gradient(ellipse at center, rgba(1,159,255,.55) 0%, rgba(1,159,255,.18) 50%, transparent 75%);
+  border:2px solid rgba(1,159,255,.7); box-shadow:0 0 35px rgba(1,159,255,.8), inset 0 0 20px rgba(1,159,255,.5);
   animation:ed-portal-pulse 3s ease-in-out infinite alternate; pointer-events:none; z-index:5;
 }
 @keyframes ed-portal-pulse{
