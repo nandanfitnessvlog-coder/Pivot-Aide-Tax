@@ -782,17 +782,6 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   0%{ transform:translateY(0) rotateX(0deg); }
   100%{ transform:translateY(-6px) rotateX(3deg); }
 }
-.ed-mood-bar{
-  display:flex; gap:6px; flex-wrap:wrap; justify-content:center; margin-top:14px;
-}
-.ed-mood-btn{
-  font-family:var(--f-mono); font-size:.62rem; letter-spacing:.08em; text-transform:uppercase;
-  padding:4px 8px; border-radius:12px; border:1px solid var(--night-line);
-  background:rgba(255,255,255,.08); color:var(--night-ink-2); cursor:pointer;
-  transition:all .15s ease;
-}
-.ed-mood-btn:hover{ background:rgba(1,159,255,.2); color:#fff; border-color:var(--blue); }
-.ed-mood-btn.active{ background:var(--gold); color:#1A1A05; font-weight:600; border-color:var(--gold); }
 </style>
 </head>
 <body>
@@ -957,14 +946,6 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <!-- beak -->
             <path id="ed-beak" d="M100 120 L111 139 L100 150 L89 139 Z" fill="#EAE42F" style="transition:transform .15s ease;transform-origin:100px 135px"/>
           </svg>
-        </div>
-        
-        <!-- Mood & Expression Controls -->
-        <div class="ed-mood-bar">
-          <button class="ed-mood-btn active" data-mood="attentive">🦉 3D Track</button>
-          <button class="ed-mood-btn" data-mood="happy">😊 Happy</button>
-          <button class="ed-mood-btn" data-mood="wink">😉 Wink</button>
-          <button class="ed-mood-btn" data-mood="sleep">😴 On Ledger</button>
         </div>
       </div>
     </div>
