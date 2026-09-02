@@ -781,13 +781,13 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   border-width:7px 7px 0 7px; border-style:solid; border-color:var(--gold) transparent transparent transparent;
 }
 
-/* Glowing Cyan Flight Portal */
+/* Glowing Cyan Flight Portal Floor */
 .ed-portal-disc{
-  position:absolute; width:220px; height:46px; bottom:12px; left:50%;
+  position:absolute; width:210px; height:46px; bottom:2px; left:50%;
   transform:translateX(-50%) rotateX(72deg); border-radius:50%;
-  background:radial-gradient(ellipse at center, rgba(1,159,255,.55) 0%, rgba(1,159,255,.18) 50%, transparent 75%);
-  border:2px solid rgba(1,159,255,.7); box-shadow:0 0 35px rgba(1,159,255,.8), inset 0 0 20px rgba(1,159,255,.5);
-  animation:ed-portal-pulse 3s ease-in-out infinite alternate; pointer-events:none; z-index:5;
+  background:radial-gradient(ellipse at center, rgba(1,159,255,.6) 0%, rgba(1,159,255,.2) 50%, transparent 75%);
+  border:2px solid rgba(1,159,255,.75); box-shadow:0 0 35px rgba(1,159,255,.85), inset 0 0 20px rgba(1,159,255,.5);
+  animation:ed-portal-pulse 3s ease-in-out infinite alternate; pointer-events:none; z-index:-1;
 }
 @keyframes ed-portal-pulse{
   0%{ transform:translateX(-50%) rotateX(72deg) scale(0.92); opacity:.7; }
@@ -1054,11 +1054,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
           &ldquo;Uncle Sam handles compliance. I handle strategy.&rdquo;
         </div>
 
-        <!-- Glowing Cyan Flight Portal -->
-        <div class="ed-portal-disc"></div>
-
         <!-- 3D Flying Mascot Container -->
         <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for cool sunglasses">
+          <!-- Glowing Cyan Flight Portal Disc -->
+          <div class="ed-portal-disc"></div>
           <svg viewBox="0 0 240 230" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
             <!-- Left Wing (Flapping / Gliding) -->
             <g id="ed-wing-left">
@@ -1756,8 +1755,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;The file that never closes. Strategy all year.&rdquo;
             </div>
-            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
             <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <div class="ed-portal-disc"></div>
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -2139,8 +2138,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;That letter has a deadline on it. Send it over. We&rsquo;ll read it today.&rdquo;
             </div>
-            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
             <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <div class="ed-portal-disc"></div>
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -2569,8 +2568,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.85rem;max-width:260px">
               &ldquo;Everybody&rsquo;s got an Uncle Sam. Not everybody&rsquo;s got an Uncle Ed.&rdquo;
             </div>
-            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
             <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <div class="ed-portal-disc"></div>
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -3069,8 +3068,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <div class="ed-speech-bubble" style="font-size:.84rem;max-width:250px">
               &ldquo;Pick a time. A real person who has read your file turns up.&rdquo;
             </div>
-            <div class="ed-portal-disc" style="width:200px;height:45px;bottom:8px"></div>
             <div class="ed-3d-wrapper ed-owl-trackable" style="width:230px;height:250px" title="Uncle Ed - Click to react / speak">
+              <div class="ed-portal-disc"></div>
               <svg viewBox="0 0 240 230" width="100%" height="100%" style="overflow:visible">
                 <!-- Left Wing -->
                 <g class="ed-wing-left-shared">
@@ -4010,6 +4009,12 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
   // Multi-Instance Reactions for Other Owls Across Views
   var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
+  
+  // Start all owls in cozy perched sitting state on page load
+  allOwls.forEach(function(owl){
+    owl.classList.add('ed-sitting');
+  });
+
   allOwls.forEach(function(owl){
     owl.addEventListener('pointerenter', function(){
       var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
