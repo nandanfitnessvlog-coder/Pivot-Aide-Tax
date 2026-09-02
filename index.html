@@ -3737,6 +3737,37 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       setMood('cool', "“Strategy unlocked. Handled cleanly. Not a dollar more.”");
     });
   }
+  // Multi-Instance Reactions for Other Owls Across Views
+  var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
+  allOwls.forEach(function(owl){
+    owl.addEventListener('mouseenter', function(){
+      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
+      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
+      if (happyEyes && openEyes) {
+        happyEyes.style.display = 'block';
+        openEyes.style.display = 'none';
+      }
+    });
+
+    owl.addEventListener('mouseleave', function(){
+      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
+      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
+      if (happyEyes && openEyes && currentMood !== 'happy') {
+        happyEyes.style.display = 'none';
+        openEyes.style.display = 'block';
+      }
+    });
+
+    owl.addEventListener('click', function(){
+      if (navigator.vibrate) try { navigator.vibrate(20); } catch(e){}
+      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
+      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
+      if (happyEyes && openEyes) {
+        happyEyes.style.display = 'block';
+        openEyes.style.display = 'none';
+      }
+      setTimeout(function(){
+        setMood('wink');
         currentQuoteIndex = (currentQuoteIndex + 1) % edQuotes.length;
         var stage = owl.closest('.ed-3d-stage');
         var b = stage ? stage.querySelector('.ed-speech-bubble') : bubble;
@@ -3754,9 +3785,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
         }
         if (currentMood === 'wink') setMood('attentive');
       }, 1600);
-    }
-
-    owl.addEventListener('click', triggerOwlReaction);
+    });
   });
 
   // Lifelike Natural Blink Timer
