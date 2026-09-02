@@ -365,24 +365,84 @@ footer .wm{ font-family:var(--f-display); font-size:1.05rem; color:#fff; font-we
   *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
 }
 
+/* ---------- hamburger button & mobile drawer ---------- */
+.mob-toggle{
+  display:none; background:none; border:0; padding:6px; cursor:pointer;
+  flex-direction:column; gap:5px; margin-left:auto; z-index:60;
+}
+.mob-toggle span{
+  display:block; width:22px; height:2px; background:var(--ink);
+  transition:transform .2s ease, opacity .2s ease; border-radius:1px;
+}
+.mob-toggle.active span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.mob-toggle.active span:nth-child(2){ opacity:0; }
+.mob-toggle.active span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+.night .mob-toggle span{ background:#fff; }
+
+.topbar-actions{ display:flex; align-items:center; gap:10px; margin-left:auto; }
+
 /* ---------- responsive ---------- */
 @media (max-width:980px){
-  .hero .in{ grid-template-columns:1fr; padding:52px 0 56px; }
-  .hero-owl svg{ max-width:190px; margin:0; }
+  .hero .in{ grid-template-columns:1fr; padding:48px 0 52px; text-align:left; }
+  .hero-owl svg{ max-width:220px; margin:0 auto; }
   .doors,.g4{ grid-template-columns:repeat(2,1fr); }
   .g3{ grid-template-columns:repeat(2,1fr); }
   .split,.split.wide{ grid-template-columns:1fr; gap:32px; }
   .bridge{ grid-template-columns:1fr; }
   footer .cols{ grid-template-columns:repeat(2,1fr); }
 }
+
+@media (max-width:880px){
+  .mob-toggle{ display:flex; }
+  .topbar .in{ height:60px; justify-content:space-between; }
+  .topbar .tel{ display:none; }
+  .topbar-actions .btn{ display:none; }
+  
+  nav.tabs{
+    position:fixed; top:60px; left:0; right:0; bottom:0; background:var(--surface);
+    flex-direction:column; gap:0; padding:18px 20px 36px; overflow-y:auto;
+    border-bottom:1px solid var(--line); transform:translateY(-100%);
+    opacity:0; pointer-events:none; transition:transform .26s cubic-bezier(.2,.8,.4,1), opacity .2s ease;
+    z-index:48; box-shadow:0 24px 50px rgba(0,0,0,.2);
+  }
+  nav.tabs.open{
+    transform:translateY(0); opacity:1; pointer-events:auto;
+  }
+  nav.tabs button{
+    font-size:1.02rem; padding:13px 12px; border-radius:var(--r);
+    border-bottom:1px solid var(--line-2); text-align:left; width:100%;
+    color:var(--ink); display:flex; align-items:center; justify-content:space-between;
+  }
+  nav.tabs button:after{
+    content:'→'; font-size:.9rem; opacity:.4; transition:transform .15s ease;
+  }
+  nav.tabs button:hover:after{
+    transform:translateX(4px); opacity:1;
+  }
+  nav.tabs button[aria-current="true"]{
+    background:var(--surface-2); font-weight:600; color:var(--blue); border-bottom-color:var(--line-2);
+  }
+  .mob-drawer-cta{
+    display:flex; flex-direction:column; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid var(--line);
+  }
+}
+
 @media (max-width:620px){
-  section{ padding:52px 0; }
+  section{ padding:44px 0; }
+  .shell{ padding:0 16px; }
+  .protobar .in{ font-size:.62rem; line-height:1.4; gap:6px; flex-direction:column; text-align:center; }
+  .hero h1{ font-size:clamp(1.85rem, 7.8vw, 2.7rem); }
+  .hero .sub{ font-size:.96rem; margin-top:16px; }
+  .hero .acts{ flex-direction:column; width:100%; }
+  .hero .acts .btn{ width:100%; justify-content:center; }
   .doors,.g4,.g3,.g2{ grid-template-columns:1fr; }
   .tier{ grid-template-columns:2.6rem 1fr; }
   .tier .pz{ grid-column:2; text-align:left; padding-top:10px; }
-  .topbar .in{ height:auto; padding:10px 0; flex-wrap:wrap; gap:10px 18px; }
-  .topbar .tel{ display:none; }
-  .edsays{ grid-template-columns:1fr; }
+  .edsays{ grid-template-columns:1fr; gap:12px; }
+  .filecards{ grid-template-columns:1fr; }
+  footer .cols{ grid-template-columns:1fr; }
+  .calc-slider-wrap{ flex-wrap:wrap; }
+  .calc-number{ width:100%; text-align:center; }
 }
 
 /* ---------- thesis: Ed vs Sam ---------- */
@@ -784,13 +844,20 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     <button data-v="res">Resources</button>
     <button data-v="appt">Appointments</button>
     <button data-v="ed">Uncle Ed</button>
+    <div class="mob-drawer-cta">
+      <button class="btn btn-g" style="width:100%;justify-content:center" id="btn-open-modal-mob">Send Notice / Intake</button>
+      <a class="btn btn-o" style="width:100%;justify-content:center" href="tel:+15714703754">📞 Call 1 (571) 470-3754</a>
+    </div>
   </nav>
-  <div style="display:flex;align-items:center;gap:12px;margin-left:auto">
+  <div class="topbar-actions">
     <button class="theme-pill" id="theme-btn" title="Toggle daylight/night preview">
       <span id="theme-label">🌙 Night</span>
     </button>
     <button class="btn btn-g" style="padding:7px 14px;font-size:.78rem" id="btn-open-modal">Send Notice / Intake</button>
   </div>
+  <button class="mob-toggle" id="mob-toggle-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
   <a class="tel" href="tel:+15714703754">1 (571) 470-3754</a>
 </div></header>
 
@@ -2907,9 +2974,19 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
 <script>
 (function(){
-  /* ---------- Tab Navigation ---------- */
+  /* ---------- Tab Navigation & Mobile Drawer ---------- */
   var tabs = document.getElementById('tabs');
-  var buttons = Array.prototype.slice.call(tabs.querySelectorAll('button'));
+  var buttons = Array.prototype.slice.call(tabs.querySelectorAll('button[data-v]'));
+  var mobToggleBtn = document.getElementById('mob-toggle-btn');
+  var mobOpenModalBtn = document.getElementById('btn-open-modal-mob');
+
+  function closeMobileDrawer(){
+    if (tabs) tabs.classList.remove('open');
+    if (mobToggleBtn) {
+      mobToggleBtn.classList.remove('active');
+      mobToggleBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
 
   function show(name){
     buttons.forEach(function(b){
@@ -2919,13 +2996,29 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       var el = document.getElementById('v-' + v);
       if (el) el.hidden = (v !== name);
     });
+    closeMobileDrawer();
     window.scrollTo({ top: 0, behavior: 'instant' in window ? 'auto' : 'auto' });
   }
 
   tabs.addEventListener('click', function(e){
-    var b = e.target.closest('button');
+    var b = e.target.closest('button[data-v]');
     if (b) show(b.dataset.v);
   });
+
+  if (mobToggleBtn) {
+    mobToggleBtn.addEventListener('click', function(){
+      var isOpen = tabs.classList.toggle('open');
+      mobToggleBtn.classList.toggle('active', isOpen);
+      mobToggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  if (mobOpenModalBtn) {
+    mobOpenModalBtn.addEventListener('click', function(){
+      closeMobileDrawer();
+      openModal('notice');
+    });
+  }
 
   document.addEventListener('click', function(e){
     var g = e.target.closest('[data-go]');
