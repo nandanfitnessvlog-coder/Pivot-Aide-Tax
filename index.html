@@ -785,7 +785,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   100%{ transform:translateX(-50%) rotateX(72deg) scale(1.08); opacity:1; filter:drop-shadow(0 0 15px rgba(1,159,255,.9)); }
 }
 
-/* 3D Flying Mascot Container */
+/* 3D Flying / Sitting Mascot Container */
 .ed-3d-wrapper{
   width:240px; height:260px; position:relative; transform-style:preserve-3d;
   cursor:pointer; filter:drop-shadow(0 25px 40px rgba(0,0,0,.5));
@@ -793,6 +793,39 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 }
 .ed-3d-wrapper:hover, .ed-3d-wrapper.active-glow{
   filter:drop-shadow(0 0 24px rgba(1,159,255,.65)) drop-shadow(0 25px 40px rgba(0,0,0,.5));
+}
+
+/* Sitting Pose State & Rhythmic Breathing */
+.ed-sitting #ed-wing-left, .ed-sitting #ed-wing-right{
+  display:none !important;
+}
+.ed-sitting #ed-wings-folded, .ed-sitting #ed-talons{
+  display:block !important;
+}
+.ed-sitting{
+  animation:ed-sit-breathe 2.8s ease-in-out infinite alternate !important;
+}
+@keyframes ed-sit-breathe{
+  0%{ transform:perspective(1000px) translateY(0) scaleY(1); }
+  100%{ transform:perspective(1000px) translateY(-4px) scaleY(1.035); }
+}
+
+/* Ear Tuft Joy Wiggle */
+.ed-wiggle-ears #ed-ears{
+  animation:ed-ear-wiggle .35s ease-in-out infinite alternate !important;
+}
+@keyframes ed-ear-wiggle{
+  0%{ transform:rotate(-4deg) translateY(-2px); }
+  100%{ transform:rotate(4deg) translateY(-4px); }
+}
+
+/* Sparkles for Laughing (>‿<) */
+.ed-laughing-sparkles{
+  animation:ed-sparkle-pop .5s ease-out infinite alternate !important;
+}
+@keyframes ed-sparkle-pop{
+  0%{ opacity:.4; transform:scale(.8) rotate(0deg); }
+  100%{ opacity:1; transform:scale(1.2) rotate(15deg); }
 }
 
 /* Dynamic Flapping Wing Animations */
@@ -991,6 +1024,24 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               <path d="M152 116 C175 104 202 92 220 72 C215 96 198 120 178 136 Z" fill="#1D3D51"/>
             </g>
 
+            <!-- Folded Wings (Sitting Mode) -->
+            <g id="ed-wings-folded" style="display:none">
+              <path d="M26 110 C26 160 45 192 62 200 C50 170 48 136 52 108 Z" fill="#142E3E"/>
+              <path d="M174 110 C174 160 155 192 138 200 C150 170 152 136 148 108 Z" fill="#142E3E"/>
+            </g>
+
+            <!-- Sitting Perched Talons -->
+            <g id="ed-talons" style="display:none">
+              <ellipse cx="78" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+              <ellipse cx="122" cy="208" rx="14" ry="7" fill="#EAE42F"/>
+              <circle cx="70" cy="210" r="3.5" fill="#C5BE1B"/>
+              <circle cx="78" cy="212" r="3.5" fill="#C5BE1B"/>
+              <circle cx="86" cy="210" r="3.5" fill="#C5BE1B"/>
+              <circle cx="114" cy="210" r="3.5" fill="#C5BE1B"/>
+              <circle cx="122" cy="212" r="3.5" fill="#C5BE1B"/>
+              <circle cx="130" cy="210" r="3.5" fill="#C5BE1B"/>
+            </g>
+
             <!-- Ear Tufts -->
             <g id="ed-ears" style="transition:transform .2s ease;transform-origin:100px 40px">
               <path d="M56 56 L30 20 L84 40 Z" fill="#14303F"/>
@@ -1024,7 +1075,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               </g>
             </g>
 
-            <!-- 1. Happy / Joy Eyes (^‿^) -->
+            <!-- 1. Super Happy / Pure Bliss (^‿^) -->
             <g id="ed-eyes-happy" style="display:none">
               <path d="M 46 115 Q 71 82 96 115" fill="none" stroke="#F2F8FC" stroke-width="7.5" stroke-linecap="round"/>
               <path d="M 50 114 Q 71 86 92 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
@@ -1032,7 +1083,17 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               <path d="M 108 114 Q 129 86 150 114" fill="none" stroke="#019FFF" stroke-width="4.5" stroke-linecap="round"/>
             </g>
 
-            <!-- 2. Laser Focus Eyes (•̀_•́) -->
+            <!-- 2. Laughing / Cheerful (>‿<) with Sparkles -->
+            <g id="ed-eyes-laugh" style="display:none">
+              <path d="M 46 98 L 74 110 L 46 122" fill="none" stroke="#F2F8FC" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 154 98 L 126 110 L 154 122" fill="none" stroke="#F2F8FC" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <g class="ed-laughing-sparkles">
+                <polygon points="30,95 33,101 39,102 34,106 36,112 30,108 24,112 26,106 21,102 27,101" fill="#EAE42F"/>
+                <polygon points="170,95 173,101 179,102 174,106 176,112 170,108 164,112 166,106 161,102 167,101" fill="#EAE42F"/>
+              </g>
+            </g>
+
+            <!-- 3. Laser Focus Eyes (•̀_•́) -->
             <g id="ed-eyes-focus" style="display:none">
               <circle cx="71" cy="107" r="24" fill="#F2F8FC"/>
               <circle cx="129" cy="107" r="24" fill="#F2F8FC"/>
@@ -1048,7 +1109,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               <path d="M154 84 L104 99" stroke="#EAE42F" stroke-width="5.5" stroke-linecap="round"/>
             </g>
 
-            <!-- 3. Sage / Calm Eyes (˘‿˘) -->
+            <!-- 4. Sage / Calm Eyes (˘‿˘) -->
             <g id="ed-eyes-calm" style="display:none">
               <path d="M 48 102 Q 71 122 94 102" fill="none" stroke="#F2F8FC" stroke-width="6.5" stroke-linecap="round"/>
               <path d="M 52 103 Q 71 119 90 103" fill="none" stroke="#019FFF" stroke-width="3.5" stroke-linecap="round"/>
@@ -1056,7 +1117,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               <path d="M 110 103 Q 129 119 148 103" fill="none" stroke="#019FFF" stroke-width="3.5" stroke-linecap="round"/>
             </g>
 
-            <!-- 4. Alert Wakeup Eyes (o_O) -->
+            <!-- 5. Alert Wakeup Eyes (o_O) -->
             <g id="ed-eyes-alert" style="display:none">
               <circle cx="69" cy="105" r="28" fill="#F2F8FC"/>
               <circle cx="69" cy="105" r="18" fill="#019FFF"/>
@@ -1082,7 +1143,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
               <text x="145" y="70" font-family="'JetBrains Mono', monospace" font-size="20" font-weight="bold" fill="#EAE42F" opacity=".85">zZ</text>
             </g>
 
-            <!-- 5. Cool Sunglasses Easter Egg (⌐■_■) -->
+            <!-- 6. Cool Sunglasses Easter Egg (⌐■_■) -->
             <g id="ed-sunglasses" style="display:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))">
               <path d="M40 95 C40 85 96 85 96 95 C96 118 40 118 40 95 Z" fill="#0A1821" stroke="#EAE42F" stroke-width="3.5"/>
               <path d="M104 95 C104 85 160 85 160 95 C160 118 104 118 104 95 Z" fill="#0A1821" stroke="#EAE42F" stroke-width="3.5"/>
@@ -3356,7 +3417,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
   var eyesFocus = document.getElementById('ed-eyes-focus');
   var eyesCalm = document.getElementById('ed-eyes-calm');
+  var eyesFocus = document.getElementById('ed-eyes-focus');
+  var eyesCalm = document.getElementById('ed-eyes-calm');
   var eyesAlert = document.getElementById('ed-eyes-alert');
+  var eyesLaugh = document.getElementById('ed-eyes-laugh');
 
   var edQuotes = [
     "“Uncle Sam isn’t the enemy. He’s just very organised. So are we.”",
@@ -3369,6 +3433,30 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   var currentQuoteIndex = 0;
   var currentMood = 'attentive';
   var idleTimer = null;
+  var sittingLandingTimer = null;
+
+  // Web Audio API Uplifting Sound Synthesizer
+  var audioCtx = null;
+  function playOwlChirp(){
+    try {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      var now = audioCtx.currentTime;
+      var notes = [523.25, 659.25, 783.99]; // C5, E5, G5 Major Harmonic Triad
+      notes.forEach(function(freq, i){
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+        gain.gain.setValueAtTime(0.12, now + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now + i * 0.08);
+        osc.stop(now + i * 0.08 + 0.36);
+      });
+    } catch(e){}
+  }
 
   function speakText(text, onComplete){
     if (owlStage) owlStage.classList.add('ed-talking');
@@ -3400,6 +3488,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   function hideAllEyeLayers(){
     if (eyesOpen) eyesOpen.style.display = 'none';
     if (eyesHappy) eyesHappy.style.display = 'none';
+    if (eyesLaugh) eyesLaugh.style.display = 'none';
     if (eyesFocus) eyesFocus.style.display = 'none';
     if (eyesCalm) eyesCalm.style.display = 'none';
     if (eyesAlert) eyesAlert.style.display = 'none';
@@ -3409,6 +3498,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     if (owlWrapper) {
       owlWrapper.classList.remove('ed-calm-aura');
       owlWrapper.classList.remove('ed-laser-focus');
+      owlWrapper.classList.remove('ed-wiggle-ears');
     }
   }
 
@@ -3420,28 +3510,39 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     var quoteText = customText || edQuotes[currentQuoteIndex];
 
     if (mood === 'happy' || mood === 'joy') {
-      // 1. Joy (^‿^)
+      // 1. Super Happy / Pure Bliss (^‿^)
       if (eyesHappy) eyesHappy.style.display = 'block';
+      if (owlWrapper) owlWrapper.classList.add('ed-wiggle-ears');
       if (edEars) edEars.style.transform = 'translateY(-3px) scale(1.06)';
       if (edBeak) edBeak.style.transform = 'translateY(1.5px)';
       if (bubble) bubble.textContent = quoteText;
       speakText(quoteText);
+    } else if (mood === 'laugh') {
+      // 2. Laughing (>‿<) with Sparkles
+      if (eyesLaugh) eyesLaugh.style.display = 'block';
+      if (owlWrapper) owlWrapper.classList.add('ed-wiggle-ears');
+      if (bubble) bubble.textContent = quoteText;
+      playOwlChirp();
+      speakText(quoteText);
     } else if (mood === 'focus') {
-      // 2. Laser Focus (•̀_•́)
+      // 3. Laser Focus (•̀_•́)
       if (eyesFocus) eyesFocus.style.display = 'block';
       if (owlWrapper) owlWrapper.classList.add('ed-laser-focus');
       if (edEars) edEars.style.transform = 'translateY(-1px)';
       if (bubble) bubble.textContent = quoteText;
       speakText(quoteText);
     } else if (mood === 'calm' || mood === 'sage') {
-      // 3. Sage / Calm (˘‿˘)
+      // 4. Sage / Cozy Relaxed (˘‿˘)
       if (eyesCalm) eyesCalm.style.display = 'block';
-      if (owlWrapper) owlWrapper.classList.add('ed-calm-aura');
+      if (owlWrapper) {
+        owlWrapper.classList.add('ed-calm-aura');
+        owlWrapper.classList.add('ed-sitting');
+      }
       if (edEars) edEars.style.transform = 'translateY(1px)';
       if (bubble) bubble.textContent = quoteText;
       speakText(quoteText);
     } else if (mood === 'cool' || mood === 'aviator') {
-      // 4. Cool Aviator (⌐■_■)
+      // 5. Cool Aviator (⌐■_■)
       if (sunglasses) sunglasses.style.display = 'block';
       if (owlWrapper) {
         owlWrapper.classList.add('ed-spinning');
@@ -3463,6 +3564,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     } else if (mood === 'sleep') {
       // Drowsy Sleep (-.- zZ)
       if (eyesSleep) eyesSleep.style.display = 'block';
+      if (owlWrapper) owlWrapper.classList.add('ed-sitting');
       quoteText = "“Books reconciled, ledgers balanced. Sleeping easy... zZ”";
       if (bubble) bubble.textContent = quoteText;
       if (edEars) edEars.style.transform = 'translateY(3px)';
@@ -3573,7 +3675,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       var pitchX = Math.max(-16, Math.min(16, -flightVelY * 3.5));
       var yawY = Math.max(-20, Math.min(20, flightCurX * 0.25));
 
-      if (!owlWrapper.classList.contains('ed-barrel-roll') && !owlWrapper.classList.contains('ed-bouncing')) {
+      if (!owlWrapper.classList.contains('ed-barrel-roll') && !owlWrapper.classList.contains('ed-bouncing') && !owlWrapper.classList.contains('ed-sitting')) {
         owlWrapper.style.transform = 'perspective(1000px) translate3d(' + flightCurX.toFixed(2) + 'px, ' + flightCurY.toFixed(2) + 'px, 0) rotateZ(' + bankZ.toFixed(2) + 'deg) rotateX(' + pitchX.toFixed(2) + 'deg) rotateY(' + yawY.toFixed(2) + 'deg)';
       }
     }
@@ -3609,10 +3711,20 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   }
   resetIdleTimer();
 
-  // Mouse & Touch Flight Tracking
+  // Mouse & Touch Flight Tracking with Automatic Pose Switching (Flight on move -> Sitting on stop)
   function updateFlightTarget(clientX, clientY){
     resetIdleTimer();
     if (owlStage && owlWrapper) {
+      // Switch to Flying mode on move
+      owlWrapper.classList.remove('ed-sitting');
+      
+      clearTimeout(sittingLandingTimer);
+      sittingLandingTimer = setTimeout(function(){
+        // Gracefully land and sit when stopped
+        owlWrapper.classList.add('ed-sitting');
+        setMood('happy');
+      }, 1400);
+
       var rect = owlStage.getBoundingClientRect();
       var centerX = rect.left + rect.width / 2;
       var centerY = rect.top + rect.height / 2;
@@ -3701,6 +3813,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 
     owl.addEventListener('click', function(){
       if (navigator.vibrate) try { navigator.vibrate(20); } catch(e){}
+      playOwlChirp();
+      owl.classList.add('ed-bouncing', 'ed-wiggle-ears');
+      setTimeout(function(){ owl.classList.remove('ed-bouncing', 'ed-wiggle-ears'); }, 600);
+
       var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
       var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
       if (happyEyes && openEyes) {
