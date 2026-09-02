@@ -772,47 +772,6 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   border-width:7px 7px 0 7px; border-style:solid; border-color:var(--gold) transparent transparent transparent;
 }
 
-/* 3D Orbiting UI Chips Ring */
-.ed-orbit-container{
-  position:absolute; width:340px; height:120px; top:190px; left:50%;
-  transform:translateX(-50%) rotateX(68deg);
-  transform-style:preserve-3d; pointer-events:none; z-index:20;
-}
-.ed-orbit-ring{
-  width:100%; height:100%; position:relative; transform-style:preserve-3d;
-  animation:ed-orbit-spin 18s linear infinite;
-}
-.ed-orbit-ring:hover{ animation-play-state:paused; }
-@keyframes ed-orbit-spin{
-  from{ transform:rotateZ(0deg); }
-  to{ transform:rotateZ(360deg); }
-}
-
-.ed-orbit-item{
-  position:absolute; transform-style:preserve-3d; pointer-events:auto;
-}
-.ed-orbit-item:nth-child(1){ top:0; left:50%; transform:translate(-50%,-50%); }
-.ed-orbit-item:nth-child(2){ top:50%; right:0; transform:translate(50%,-50%); }
-.ed-orbit-item:nth-child(3){ bottom:0; left:50%; transform:translate(-50%,50%); }
-.ed-orbit-item:nth-child(4){ top:50%; left:0; transform:translate(-50%,-50%); }
-
-.ed-orbit-btn{
-  font-family:var(--f-mono); font-size:.66rem; font-weight:600; padding:6px 12px; border-radius:14px;
-  background:rgba(9,32,46,.92); border:1px solid rgba(1,159,255,.5); color:#DCEBF3;
-  cursor:pointer; transition:all .2s cubic-bezier(.2,.8,.3,1); white-space:nowrap;
-  box-shadow:0 8px 20px rgba(0,0,0,.5), 0 0 12px rgba(1,159,255,.25); backdrop-filter:blur(6px);
-  transform:rotateX(-68deg); animation:ed-counter-spin 18s linear infinite;
-}
-@keyframes ed-counter-spin{
-  from{ transform:rotateX(-68deg) rotateZ(0deg); }
-  to{ transform:rotateX(-68deg) rotateZ(-360deg); }
-}
-.ed-orbit-btn:hover, .ed-orbit-btn.active{
-  background:var(--blue-dk); border-color:var(--gold); color:#fff;
-  box-shadow:0 0 25px rgba(1,159,255,.9), 0 8px 22px rgba(0,0,0,.6);
-  transform:rotateX(-68deg) scale(1.15);
-}
-
 /* Glowing Cyan Flight Portal */
 .ed-portal-disc{
   position:absolute; width:220px; height:50px; bottom:12px; left:50%;
@@ -1014,29 +973,11 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
           &ldquo;Uncle Sam handles compliance. I handle strategy.&rdquo;
         </div>
 
-        <!-- 3D Orbiting UI Chips Ring -->
-        <div class="ed-orbit-container" id="ed-orbit-box">
-          <div class="ed-orbit-ring" id="ed-orbit-ring">
-            <div class="ed-orbit-item">
-              <button class="ed-orbit-btn ed-chip" data-ask="deductions">💰 Max My Deductions</button>
-            </div>
-            <div class="ed-orbit-item">
-              <button class="ed-orbit-btn ed-chip" data-ask="panic">⏳ April Panic?</button>
-            </div>
-            <div class="ed-orbit-item">
-              <button class="ed-orbit-btn ed-chip" data-ask="audit">🛡️ Audit Armor</button>
-            </div>
-            <div class="ed-orbit-item">
-              <button class="ed-orbit-btn ed-chip" data-ask="secret">✨ Secret Strategy</button>
-            </div>
-          </div>
-        </div>
-
         <!-- Glowing Cyan Flight Portal -->
         <div class="ed-portal-disc"></div>
 
         <!-- 3D Flying Mascot Container -->
-        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to swoop & speak, double-click for 360° roll">
+        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for cool sunglasses">
           <svg viewBox="0 0 240 230" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
             <!-- Left Wing (Flapping / Gliding) -->
             <g id="ed-wing-left">
