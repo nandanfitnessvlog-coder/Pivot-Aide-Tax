@@ -757,30 +757,52 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
 /* ---------- 3D interactive Uncle Ed character ---------- */
 .ed-3d-stage{
   perspective:900px; display:flex; flex-direction:column; align-items:center;
-  position:relative; user-select:none; max-width:320px; margin:0 auto;
+  position:relative; user-select:none; max-width:340px; margin:0 auto;
 }
 .ed-speech-bubble{
-  background:rgba(11,44,62,.92); color:#fff; border:1px solid var(--gold); border-radius:8px;
-  padding:10px 14px; font-family:var(--f-display); font-size:.86rem; line-height:1.4;
-  position:relative; margin-bottom:14px; max-width:260px; text-align:center;
-  box-shadow:0 8px 24px rgba(0,0,0,.35); backdrop-filter:blur(6px);
-  transition:all .22s ease; transform-origin:bottom center;
+  background:rgba(11,44,62,.94); color:#fff; border:1px solid var(--gold); border-radius:10px;
+  padding:12px 16px; font-family:var(--f-display); font-size:.88rem; line-height:1.45;
+  position:relative; margin-bottom:12px; max-width:280px; text-align:center;
+  box-shadow:0 10px 28px rgba(0,0,0,.4); backdrop-filter:blur(8px);
+  transition:transform .2s ease, border-color .2s ease; transform-origin:bottom center;
 }
 .ed-speech-bubble:after{
   content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
   border-width:7px 7px 0 7px; border-style:solid; border-color:var(--gold) transparent transparent transparent;
 }
+.ed-quick-chips{
+  display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin-bottom:14px; max-width:300px;
+}
+.ed-chip{
+  font-family:var(--f-mono); font-size:.65rem; padding:4px 9px; border-radius:12px;
+  background:rgba(255,255,255,.07); border:1px solid var(--night-line); color:var(--night-ink-2);
+  cursor:pointer; transition:all .16s ease; white-space:nowrap;
+}
+.ed-chip:hover{
+  background:rgba(1,159,255,.25); border-color:var(--brand); color:#fff; transform:translateY(-1px);
+}
 .ed-3d-wrapper{
   width:240px; height:260px; position:relative; transform-style:preserve-3d;
-  transition:transform .12s cubic-bezier(.2,.8,.4,1); cursor:pointer;
+  transition:transform .12s cubic-bezier(.2,.8,.4,1), filter .2s ease; cursor:pointer;
   filter:drop-shadow(0 20px 35px rgba(0,0,0,.45));
 }
-.ed-3d-wrapper:hover{
-  animation:ed-float 3s ease-in-out infinite alternate;
+.ed-3d-wrapper:hover, .ed-3d-wrapper.active-glow{
+  filter:drop-shadow(0 0 20px rgba(1,159,255,.5)) drop-shadow(0 20px 35px rgba(0,0,0,.45));
 }
-@keyframes ed-float{
-  0%{ transform:translateY(0) rotateX(0deg); }
-  100%{ transform:translateY(-6px) rotateX(3deg); }
+.ed-talking #ed-beak, .ed-talking .ed-beak-shared{
+  animation:ed-talk .24s ease-in-out infinite alternate !important;
+}
+@keyframes ed-talk{
+  0%{ transform:translateY(0); }
+  100%{ transform:translateY(3.5px) scaleY(1.15); }
+}
+@keyframes ed-spin{
+  0%{ transform:perspective(900px) rotateY(0deg); }
+  50%{ transform:perspective(900px) rotateY(180deg) scale(1.08); }
+  100%{ transform:perspective(900px) rotateY(360deg); }
+}
+.ed-spinning{
+  animation:ed-spin .65s cubic-bezier(.2,.8,.3,1) !important;
 }
 </style>
 </head>
@@ -883,7 +905,13 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
         <div class="ed-speech-bubble" id="ed-bubble">
           &ldquo;Uncle Sam handles compliance. I handle strategy.&rdquo;
         </div>
-        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react / speak">
+        <div class="ed-quick-chips">
+          <button class="ed-chip" data-ask="strategy">💡 Why strategy?</button>
+          <button class="ed-chip" data-ask="notice">📩 Got an IRS letter?</button>
+          <button class="ed-chip" data-ask="scorp">🏢 S-Corp savings?</button>
+          <button class="ed-chip" data-ask="secret">✨ Uncle Ed secret</button>
+        </div>
+        <div class="ed-3d-wrapper" id="ed-interactive-owl" title="Uncle Ed - Click to react, double-click for secret">
           <svg viewBox="0 0 200 220" width="100%" height="100%" id="ed-svg-main" style="overflow:visible">
             <!-- ear tufts -->
             <g id="ed-ears" style="transition:transform .2s ease;transform-origin:100px 40px">
@@ -941,6 +969,15 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
             <g id="ed-eyes-sleep" style="display:none">
               <path d="M 48 108 L 94 108" fill="none" stroke="#F2F8FC" stroke-width="6" stroke-linecap="round"/>
               <path d="M 106 108 L 152 108" fill="none" stroke="#F2F8FC" stroke-width="6" stroke-linecap="round"/>
+            </g>
+
+            <!-- Cool Sunglasses Easter Egg -->
+            <g id="ed-sunglasses" style="display:none;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))">
+              <path d="M40 95 C40 85 96 85 96 95 C96 118 40 118 40 95 Z" fill="#0A1821" stroke="#EAE42F" stroke-width="3.5"/>
+              <path d="M104 95 C104 85 160 85 160 95 C160 118 104 118 104 95 Z" fill="#0A1821" stroke="#EAE42F" stroke-width="3.5"/>
+              <line x1="94" y1="94" x2="106" y2="94" stroke="#EAE42F" stroke-width="4" stroke-linecap="round"/>
+              <path d="M48 95 L88 108" stroke="#019FFF" stroke-width="2.5" opacity=".7"/>
+              <path d="M112 95 L152 108" stroke="#019FFF" stroke-width="2.5" opacity=".7"/>
             </g>
 
             <!-- beak -->
@@ -3204,7 +3241,7 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   var eyesSleep = document.getElementById('ed-eyes-sleep');
   var edEars = document.getElementById('ed-ears');
   var edBeak = document.getElementById('ed-beak');
-  var moodBtns = Array.prototype.slice.call(document.querySelectorAll('.ed-mood-btn'));
+  var sunglasses = document.getElementById('ed-sunglasses');
 
   var edQuotes = [
     "“Uncle Sam isn’t the enemy. He’s just very organised. So are we.”",
@@ -3217,44 +3254,120 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
   var currentQuoteIndex = 0;
   var currentMood = 'attentive';
 
-  function setMood(mood){
+  function speakText(text, onComplete){
+    if (owlStage) owlStage.classList.add('ed-talking');
+    
+    // Optional Web Speech API synthesis
+    if ('speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+        var cleanText = text.replace(/[“”"']/g, '');
+        var utter = new SpeechSynthesisUtterance(cleanText);
+        utter.rate = 0.95;
+        utter.pitch = 0.88;
+        utter.onend = function(){
+          if (owlStage) owlStage.classList.remove('ed-talking');
+          if (onComplete) onComplete();
+        };
+        utter.onerror = function(){
+          if (owlStage) owlStage.classList.remove('ed-talking');
+        };
+        window.speechSynthesis.speak(utter);
+      } catch(e) {
+        setTimeout(function(){ if (owlStage) owlStage.classList.remove('ed-talking'); }, 1800);
+      }
+    } else {
+      setTimeout(function(){ if (owlStage) owlStage.classList.remove('ed-talking'); }, 1800);
+    }
+  }
+
+  function setMood(mood, customText){
     currentMood = mood;
-    moodBtns.forEach(function(btn){
-      btn.classList.toggle('active', btn.dataset.mood === mood);
-    });
 
     if (eyesOpen) eyesOpen.style.display = 'none';
     if (eyesHappy) eyesHappy.style.display = 'none';
     if (winkLeft) winkLeft.style.display = 'none';
     if (eyesSleep) eyesSleep.style.display = 'none';
 
+    var quoteText = customText || edQuotes[currentQuoteIndex];
+
     if (mood === 'happy') {
       if (eyesHappy) eyesHappy.style.display = 'block';
-      if (bubble) bubble.textContent = "“Always good to see you! What can we plan today?”";
+      quoteText = customText || "“Always good to see you! What can we plan today?”";
+      if (bubble) bubble.textContent = quoteText;
       if (edEars) edEars.style.transform = 'translateY(-2px) scale(1.04)';
+      speakText(quoteText);
     } else if (mood === 'wink') {
       if (eyesOpen) eyesOpen.style.display = 'block';
       if (winkLeft) winkLeft.style.display = 'block';
-      if (bubble) bubble.textContent = "“Handled cleanly. Not a dollar more.”";
+      if (bubble) bubble.textContent = quoteText;
+      speakText(quoteText);
       if (edBeak) edBeak.style.transform = 'translateY(2px)';
       setTimeout(function(){ if (edBeak) edBeak.style.transform = 'none'; }, 400);
     } else if (mood === 'sleep') {
       if (eyesSleep) eyesSleep.style.display = 'block';
-      if (bubble) bubble.textContent = "“Books reconciled, ledgers balanced. Sleeping easy.”";
+      quoteText = customText || "“Books reconciled, ledgers balanced. Sleeping easy.”";
+      if (bubble) bubble.textContent = quoteText;
       if (edEars) edEars.style.transform = 'translateY(2px)';
     } else {
       // Attentive default
       if (eyesOpen) eyesOpen.style.display = 'block';
       if (edEars) edEars.style.transform = 'none';
+      if (bubble && customText) bubble.textContent = customText;
+      if (customText) speakText(customText);
     }
   }
 
-  moodBtns.forEach(function(btn){
-    btn.addEventListener('click', function(e){
+  // Interactive Quick Prompt Chips
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.ed-chip'));
+  var chipAnswers = {
+    strategy: "“Strategy is what you do during the 11 months before April. That is what decides your number.”",
+    notice: "“That letter has a deadline on it. Send it over free. Most notices are wrong about basis.”",
+    scorp: "“Once your net profit tops $75k, an S-Corp saves you thousands in self-employment taxes.”",
+    secret: "“Strategy unlocked. Handled cleanly. Not a dollar more.”"
+  };
+
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(e){
       e.stopPropagation();
-      setMood(btn.dataset.mood);
+      var key = chip.dataset.ask;
+      if (key === 'secret') {
+        toggleSunglasses(true);
+        if (owlWrapper) {
+          owlWrapper.classList.add('ed-spinning');
+          setTimeout(function(){ owlWrapper.classList.remove('ed-spinning'); }, 700);
+        }
+      }
+      setMood(key === 'secret' ? 'wink' : 'attentive', chipAnswers[key]);
     });
   });
+
+  function toggleSunglasses(forceState){
+    if (!sunglasses) return;
+    var isShowing = forceState !== undefined ? forceState : (sunglasses.style.display !== 'none');
+    if (isShowing && forceState === undefined) {
+      sunglasses.style.display = 'none';
+      if (eyesOpen) eyesOpen.style.display = 'block';
+    } else {
+      sunglasses.style.display = 'block';
+      if (eyesOpen) eyesOpen.style.display = 'none';
+      if (eyesHappy) eyesHappy.style.display = 'none';
+      if (winkLeft) winkLeft.style.display = 'none';
+    }
+  }
+
+  if (owlWrapper) {
+    // Double click easter egg
+    owlWrapper.addEventListener('dblclick', function(e){
+      e.preventDefault();
+      toggleSunglasses();
+      if (owlWrapper) {
+        owlWrapper.classList.add('ed-spinning');
+        setTimeout(function(){ owlWrapper.classList.remove('ed-spinning'); }, 700);
+      }
+      setMood('wink', "“Looking cool. Numbers balanced. Taxes optimized.”");
+    });
+  }
 
   // Multi-Instance 3D Parallax & Eye Tracking on Mouse & Touch
   var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
