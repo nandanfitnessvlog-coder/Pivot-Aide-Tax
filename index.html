@@ -3256,10 +3256,10 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
     });
   });
 
-  // Multi-Instance 3D Parallax & Eye Tracking on Mousemove
+  // Multi-Instance 3D Parallax & Eye Tracking on Mouse & Touch
   var allOwls = Array.prototype.slice.call(document.querySelectorAll('.ed-3d-wrapper'));
 
-  window.addEventListener('mousemove', function(e){
+  function updateOwlTracking(clientX, clientY){
     if (currentMood === 'sleep') return;
 
     allOwls.forEach(function(owl){
@@ -3268,8 +3268,8 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       var centerX = rect.left + rect.width / 2;
       var centerY = rect.top + rect.height / 2;
 
-      var deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
-      var deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
+      var deltaX = (clientX - centerX) / (window.innerWidth / 2);
+      var deltaY = (clientY - centerY) / (window.innerHeight / 2);
 
       var rotateX = -Math.max(-18, Math.min(18, deltaY * 18));
       var rotateY = Math.max(-22, Math.min(22, deltaX * 22));
@@ -3284,9 +3284,41 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       if (pL) pL.style.transform = 'translate(' + pupilShiftX + 'px, ' + pupilShiftY + 'px)';
       if (pR) pR.style.transform = 'translate(' + pupilShiftX + 'px, ' + pupilShiftY + 'px)';
     });
+  }
+
+  // Desktop Mouse Move
+  window.addEventListener('mousemove', function(e){
+    updateOwlTracking(e.clientX, e.clientY);
   });
 
+  // Mobile Touch Drag Tracking
+  window.addEventListener('touchmove', function(e){
+    if (e.touches && e.touches[0]) {
+      updateOwlTracking(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchstart', function(e){
+    if (e.touches && e.touches[0]) {
+      updateOwlTracking(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+
+  // Mobile Gyroscope / Device Orientation Tracking
+  if (window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', function(e){
+      if (e.gamma !== null && e.beta !== null) {
+        var gamma = Math.max(-30, Math.min(30, e.gamma)); // Left-to-right tilt
+        var beta = Math.max(10, Math.min(70, e.beta));    // Front-to-back tilt
+        var simulatedX = window.innerWidth / 2 + (gamma / 30) * (window.innerWidth / 2);
+        var simulatedY = window.innerHeight / 2 + ((beta - 40) / 30) * (window.innerHeight / 2);
+        updateOwlTracking(simulatedX, simulatedY);
+      }
+    }, { passive: true });
+  }
+
   allOwls.forEach(function(owl){
+    // Desktop Hover: Smile
     owl.addEventListener('mouseenter', function(){
       var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
       var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
@@ -3310,17 +3342,41 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       if (pR) pR.style.transform = 'none';
     });
 
-    owl.addEventListener('click', function(){
-      setMood('wink');
-      currentQuoteIndex = (currentQuoteIndex + 1) % edQuotes.length;
-      var stage = owl.closest('.ed-3d-stage');
-      var b = stage ? stage.querySelector('.ed-speech-bubble') : bubble;
-      if (b) b.textContent = edQuotes[currentQuoteIndex];
+    // Tap / Click Reaction for Both Mobile & Desktop
+    function triggerOwlReaction(){
+      if (navigator.vibrate) try { navigator.vibrate(20); } catch(e){}
+      
+      // Step 1: Happy smile
+      var happyEyes = owl.querySelector('#ed-eyes-happy, .ed-eyes-happy-shared');
+      var openEyes = owl.querySelector('#ed-eyes-open, .ed-eyes-open-shared');
+      if (happyEyes && openEyes) {
+        happyEyes.style.display = 'block';
+        openEyes.style.display = 'none';
+      }
+
+      // Step 2: Wink & new quote
+      setTimeout(function(){
+        setMood('wink');
+        currentQuoteIndex = (currentQuoteIndex + 1) % edQuotes.length;
+        var stage = owl.closest('.ed-3d-stage');
+        var b = stage ? stage.querySelector('.ed-speech-bubble') : bubble;
+        if (b) {
+          b.textContent = edQuotes[currentQuoteIndex];
+          b.style.transform = 'scale(1.05)';
+          setTimeout(function(){ b.style.transform = 'none'; }, 250);
+        }
+      }, 350);
 
       setTimeout(function(){
+        if (happyEyes && openEyes) {
+          happyEyes.style.display = 'none';
+          openEyes.style.display = 'block';
+        }
         if (currentMood === 'wink') setMood('attentive');
-      }, 1400);
-    });
+      }, 1600);
+    }
+
+    owl.addEventListener('click', triggerOwlReaction);
   });
 
   // Lifelike Natural Blink Timer
@@ -3341,6 +3397,23 @@ ul.ticks.lime li:before{ background:var(--gold-dp); }
       });
     }
   }, 4800);
+
+  // Mobile Ambient Look-Around Idle Cycle
+  var idleLookStep = 0;
+  setInterval(function(){
+    if (currentMood === 'attentive') {
+      idleLookStep = (idleLookStep + 1) % 4;
+      allOwls.forEach(function(owl){
+        if (owl.offsetParent === null) return;
+        var pL = owl.querySelector('#ed-group-pupil-left, .ed-pupil-left-shared');
+        var pR = owl.querySelector('#ed-group-pupil-right, .ed-pupil-right-shared');
+        var shiftX = idleLookStep === 1 ? -4 : (idleLookStep === 3 ? 4 : 0);
+        var shiftY = idleLookStep === 2 ? 3 : 0;
+        if (pL) pL.style.transform = 'translate(' + shiftX + 'px, ' + shiftY + 'px)';
+        if (pR) pR.style.transform = 'translate(' + shiftX + 'px, ' + shiftY + 'px)';
+      });
+    }
+  }, 3200);
 })();
 </script>
 
